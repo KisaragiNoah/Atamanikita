@@ -1,27 +1,26 @@
+# あたまにきた
+1.21.1をメインに開発されたMODです。
 
-Installation information
-=======
+# 導入方法
+- Java 21 以降必須
+- 導入前に一度Vanillaの1.21.1を起動する必要があります。
+- NeoForge 1.21.1 を入れます。
+    - バージョン`21.1.169`以上が必要です。
+- modsフォルダにModを導入します。
+- 楽しめ
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions at [github](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+# 注意事項
+- おそらくバグが多い
+    - まともにテストしているわけではないのでバグが多くあると思います。
+    - 特にマルチプレイ時の動作を検証していないのであればIssuesに書き込んでください。
+- 他Modとの互換性
+    - コード的に互換性がないことは少ないと思いますが、もしかするとなにかあるかもしれません。
+    - その場合は一度このModを削除し、もう一度起動してみてください。
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
-
-> **Note**: For Eclipse, use tasks in `Launch Group` instead of ones founds in `Java Application`. A preparation task must run before launching the game. NeoGradle uses launch groups to do these subsequently.
-
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
-
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
-
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+# その他
+- Fabric版について
+    - おそらくFabric版を作ることはないと思います。
+    - Forge版はもしかしたら作るかもしれないです。
+- 対応バージョンについて
+    - 現在の対応バージョンは1.21.1のみとなっています。
+    - 今後は1.21.1より上のバージョンのもののみを作っていくことになると思います。

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package":"com.kisaraginoah.atamanikita",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
