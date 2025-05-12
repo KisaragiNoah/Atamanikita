@@ -1,0 +1,20 @@
+{
+  "ohanabatake": {
+    "sounds": [
+      {
+        "name": "atamanikita:ohanabatake",
+        "stream": true,
+        "volume": 0.5
+      }
+    ]
+  },
+  "asuretikku": {
+    "sounds": [
+      {
+        "name": "atamanikita:asuretikku",
+        "stream": true,
+        "volume": 0.5
+      }
+    ]
+  }
+}
