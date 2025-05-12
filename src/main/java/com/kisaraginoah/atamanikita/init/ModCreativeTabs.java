@@ -22,6 +22,8 @@ public class ModCreativeTabs {
                         .displayItems((parameters, output) -> {
                             output.accept(ModItems.OHANABATAKE_MUSIC_DISC.value());
                             output.accept(ModItems.ASURETIKKU_MUSIC_DISC.value());
+                            output.accept(ModItems.BUDOU_JUSU.value());
+                            output.accept(ModItems.RINGO_JUSU.value());
                         }).withSearchBar().build()
         );
     }
