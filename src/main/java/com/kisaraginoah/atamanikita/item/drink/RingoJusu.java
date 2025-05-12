@@ -17,11 +17,12 @@ public class RingoJusu extends JusuBase {
 
     @Override
     protected void processEffects(LivingEntity livingEntity) {
+        List<MobEffectInstance> removeEffect = livingEntity.getActiveEffects().stream()
+                .filter(mobEffectInstance -> mobEffectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
+                .toList();
         if (!livingEntity.level().isClientSide) {
-            for (MobEffectInstance effectInstance : livingEntity.getActiveEffects()) {
-                if (effectInstance.getEffect().value().getCategory().equals(MobEffectCategory.HARMFUL)) {
-                    livingEntity.removeEffect(effectInstance.getEffect());
-                }
+            if (!removeEffect.isEmpty()) {
+                livingEntity.removeEffect(removeEffect.get(livingEntity.level().random.nextInt(removeEffect.size())).getEffect());
             }
         }
     }

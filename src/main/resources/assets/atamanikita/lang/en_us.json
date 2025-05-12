@@ -11,5 +11,5 @@
   "item.atamanikita.budou_jusu.desc": "§d飲むとポーションの効果時間が1分増える",
 
   "item.atamanikita.ringo_jusu": "りんごジュース",
-  "item.atamanikita.ringo_jusu.desc": "§d飲むと悪いポーション効果が消える"
+  "item.atamanikita.ringo_jusu.desc": "§d飲むと悪いポーション効果をランダムで１つ削除する"
 }
