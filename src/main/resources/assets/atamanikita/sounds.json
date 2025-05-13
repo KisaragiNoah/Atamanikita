@@ -16,5 +16,14 @@
         "volume": 0.5
       }
     ]
+  },
+  "megalovania": {
+    "sounds": [
+      {
+        "name": "atamanikita:megalovania",
+        "stream": true,
+        "volume": 0.7
+      }
+    ]
   }
 }

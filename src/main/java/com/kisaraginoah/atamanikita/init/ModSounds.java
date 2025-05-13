@@ -15,9 +15,11 @@ public class ModSounds {
 
     public static final Supplier<SoundEvent> OHANABATAKE = registerSoundEvent("ohanabatake");
     public static final Supplier<SoundEvent> ASURETIKKU = registerSoundEvent("asuretikku");
+    public static final Supplier<SoundEvent> MEGALOVANIA = registerSoundEvent("megalovania");
 
     public static final ResourceKey<JukeboxSong> OHANABATAKE_KEY = createSong("ohanabatake");
     public static final ResourceKey<JukeboxSong> ASURETIKKU_KEY = createSong("asuretikku");
+    public static final ResourceKey<JukeboxSong> MEGALOVANIA_KEY = createSong("megalovania");
 
     private static ResourceKey<JukeboxSong> createSong(String name) {
         return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Atamanikita.MOD_ID, name));
