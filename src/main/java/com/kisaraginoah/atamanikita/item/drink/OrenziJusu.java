@@ -21,12 +21,12 @@ public class OrenziJusu extends JusuBase {
     @Override
     protected void processEffects(LivingEntity livingEntity) {
         if (!livingEntity.level().isClientSide) {
-            List<Holder<MobEffect>> goodEffects = BuiltInRegistries.MOB_EFFECT.holders()
+            List<Holder<MobEffect>> effects = BuiltInRegistries.MOB_EFFECT.holders()
                     .filter(holder -> holder.value().isBeneficial())
                     .collect(Collectors.toList());
 
-            if (!goodEffects.isEmpty()) {
-                livingEntity.addEffect(new MobEffectInstance(goodEffects.get(livingEntity.level().random.nextInt(goodEffects.size())), 20 * 60));
+            if (!effects.isEmpty()) {
+                livingEntity.addEffect(new MobEffectInstance(effects.get(livingEntity.level().random.nextInt(effects.size())), 20 * 60));
             }
         }
     }
