@@ -52,7 +52,6 @@ public abstract class JusuBase extends Item {
             stack.consume(1, player);
         }
 
-        // アイテムの補充
         if (player == null || !player.hasInfiniteMaterials()) {
             if (stack.isEmpty()) {
                 return new ItemStack(Items.GLASS_BOTTLE);

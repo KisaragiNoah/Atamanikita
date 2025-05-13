@@ -29,6 +29,6 @@ public class RingoJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.ringo_jusu.desc"));
+        tooltipComponents.add(Component.translatable("item.atamanikita.ringo_jusu.desc1"));
     }
 }

@@ -27,6 +27,6 @@ public class BudouJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.budou_jusu.desc"));
+        tooltipComponents.add(Component.translatable("item.atamanikita.budou_jusu.desc1"));
     }
 }
