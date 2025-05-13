@@ -26,7 +26,7 @@ public class MusicDiscDropEvent {
         LivingEntity entity = event.getEntity();
 
         if (event.getSource().getEntity() instanceof Player && !(entity instanceof Player)) {
-            if (entity.level().random.nextFloat() < 0.00001f) {
+            if (entity.level().random.nextFloat() < 0.0001f) {
                 int index = entity.level().random.nextInt(DROP_CANDIDATES.size());
                 Item item = DROP_CANDIDATES.get(index).value();
                 ItemStack drop = new ItemStack(item);
