@@ -24,6 +24,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.ASURETIKKU_MUSIC_DISC.value());
                             output.accept(ModItems.BUDOU_JUSU.value());
                             output.accept(ModItems.RINGO_JUSU.value());
+                            output.accept(ModItems.ORENZI_JUSU.value());
                         }).withSearchBar().build()
         );
     }
