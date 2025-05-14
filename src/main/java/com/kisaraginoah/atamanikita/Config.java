@@ -10,8 +10,8 @@ public class Config {
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_DURATION;
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_AMPLIER;
-
-    public static final ModConfigSpec.DoubleValue MUSIC_DISC_DROP_CHANGE;
+    public static final ModConfigSpec.ConfigValue<Boolean> MUSIC_DISC_DROP;
+    public static final ModConfigSpec.ConfigValue<Double> MUSIC_DISC_DROP_CHANGE;
 
     static {
         BUILDER.push("common");
@@ -29,10 +29,13 @@ public class Config {
                 .define("orenzi_jusu_effect_duration", 1200);
         ORENZI_JUSU_EFFECT_AMPLIER = BUILDER
                 .comment("オレンジジュースを飲んだ際につくエフェクトの効果の強さ")
-                .define("orenzi_jusu_effect_amplier", 0);
+                .defineInRange("orenzi_jusu_effect_amplier", 0, 0, 255);
+        MUSIC_DISC_DROP = BUILDER
+                .comment("追加されたレコードがドロップするかどうか")
+                .define("music_disc_drop", false);
         MUSIC_DISC_DROP_CHANGE = BUILDER
-                .comment("追加されたレコードのドロップ確率")
-                .defineInRange("music_disc_drop_change", 0.01, 0.000000001, 1.0);
+                .comment("追加されたレコードのドロップ確率（％）")
+                .defineInRange("music_disc_drop_change", 0.01, 0, 100);
         BUILDER.pop();
     }
 
