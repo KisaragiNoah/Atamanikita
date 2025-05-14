@@ -14,7 +14,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 
 import java.util.List;
 
-@EventBusSubscriber
 public class MusicDiscDropEvent {
 
     private static final List<Holder<Item>> DROP_CANDIDATES = List.of(
@@ -28,7 +27,7 @@ public class MusicDiscDropEvent {
         LivingEntity entity = event.getEntity();
 
         if (event.getSource().getEntity() instanceof Player && !(entity instanceof Player)) {
-            if (entity.level().random.nextFloat() < Config.MUSIC_DISC_DROP_CHANGE.get().floatValue()) {
+            if (entity.level().random.nextFloat() < Config.MUSIC_DISC_DROP_CHANGE.get().floatValue() / 100) {
                 int index = entity.level().random.nextInt(DROP_CANDIDATES.size());
                 Item item = DROP_CANDIDATES.get(index).value();
                 ItemStack drop = new ItemStack(item);
