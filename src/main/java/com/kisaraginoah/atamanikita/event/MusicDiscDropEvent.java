@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.event;
 
-import com.kisaraginoah.atamanikita.CommonConfig;
+import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
-import com.kisaraginoah.atamanikita.CommonConfig;
+import com.kisaraginoah.atamanikita.config.CommonConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;

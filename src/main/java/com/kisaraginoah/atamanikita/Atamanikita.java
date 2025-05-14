@@ -1,5 +1,8 @@
 package com.kisaraginoah.atamanikita;
 
+import com.kisaraginoah.atamanikita.config.ClientConfig;
+import com.kisaraginoah.atamanikita.config.CommonConfig;
+import com.kisaraginoah.atamanikita.event.BlockBreakDropEvent;
 import com.kisaraginoah.atamanikita.event.MusicDiscDropEvent;
 import com.kisaraginoah.atamanikita.init.ModBlocks;
 import com.kisaraginoah.atamanikita.init.ModCreativeTabs;
@@ -23,11 +26,15 @@ public class Atamanikita {
         ModCreativeTabs.REGISTER.register(modEventBus);
         ModBlocks.REGISTER.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
+        modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         if (CommonConfig.MUSIC_DISC_DROP.get()) {
             NeoForge.EVENT_BUS.register(MusicDiscDropEvent.class);
+        }
+        if (CommonConfig.UNIVERSAL_TOOL_DROP.get()) {
+            NeoForge.EVENT_BUS.register(BlockBreakDropEvent.class);
         }
     }
 }

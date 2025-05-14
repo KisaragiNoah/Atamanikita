@@ -1,8 +1,9 @@
-package com.kisaraginoah.atamanikita;
+package com.kisaraginoah.atamanikita.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class CommonConfig {
+
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.ConfigValue<Integer> BUDOU_JUSU_DURATION_EXTENDS;
@@ -12,6 +13,8 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_AMPLIER;
     public static final ModConfigSpec.ConfigValue<Boolean> MUSIC_DISC_DROP;
     public static final ModConfigSpec.ConfigValue<Double> MUSIC_DISC_DROP_CHANGE;
+    public static final ModConfigSpec.ConfigValue<Boolean> UNIVERSAL_TOOL_DROP;
+    public static final ModConfigSpec.ConfigValue<Double> UNIVERSAL_TOOL_DROP_CHANCE;
 
     static {
         BUILDER.push("common");
@@ -36,6 +39,12 @@ public class CommonConfig {
         MUSIC_DISC_DROP_CHANGE = BUILDER
                 .comment("追加されたレコードのドロップ確率（％）")
                 .defineInRange("music_disc_drop_change", 0.01, 0, 100);
+        UNIVERSAL_TOOL_DROP = BUILDER
+                .comment("ユニバーサルツールがドロップするかどうか")
+                .define("universal_tool_drop", true);
+        UNIVERSAL_TOOL_DROP_CHANCE = BUILDER
+                .comment("ユニバーサルツールのドロップ確率（％）")
+                .defineInRange("universal_tool_drop_change", 0.0001, 0, 100);
         BUILDER.pop();
     }
 

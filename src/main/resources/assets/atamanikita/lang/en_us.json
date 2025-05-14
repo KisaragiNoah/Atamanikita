@@ -17,5 +17,8 @@
   "item.atamanikita.orenzi_jusu.desc1": "§d飲むと良いポーション効果をランダムで１つ獲得する",
 
   "item.atamanikita.megalovania_music_disc": "Megalovaniaのレコード",
-  "item.atamanikita.megalovania_music_disc.desc": "Megalovania - Toby Fox"
+  "item.atamanikita.megalovania_music_disc.desc": "Megalovania - Toby Fox",
+
+  "item.atamanikita.universal_tool": "ユニバーサルツール",
+  "item.atamanikita.universal_tool.desc1": "§dどんなものでも破壊する最強のツール"
 }

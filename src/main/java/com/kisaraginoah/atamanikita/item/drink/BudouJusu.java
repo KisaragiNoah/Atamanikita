@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
-import com.kisaraginoah.atamanikita.CommonConfig;
+import com.kisaraginoah.atamanikita.config.CommonConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;

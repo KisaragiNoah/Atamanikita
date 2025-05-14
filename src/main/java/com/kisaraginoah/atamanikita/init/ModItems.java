@@ -7,6 +7,7 @@ import com.kisaraginoah.atamanikita.item.drink.RingoJusu;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.MegalovaniaMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.OhanabatakeMusicDisc;
+import com.kisaraginoah.atamanikita.item.tool.UniversalTool;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -22,4 +23,6 @@ public class ModItems {
     public static final Holder<Item> BUDOU_JUSU = REGISTER.register("budou_jusu", BudouJusu::new);
     public static final Holder<Item> RINGO_JUSU = REGISTER.register("ringo_jusu", RingoJusu::new);
     public static final Holder<Item> ORENZI_JUSU = REGISTER.register("orenzi_jusu", OrenziJusu::new);
+
+    public static final Holder<Item> UNIVERSAL_TOOL = REGISTER.register("universal_tool", UniversalTool::new);
 }
