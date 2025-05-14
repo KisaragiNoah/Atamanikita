@@ -2,7 +2,7 @@ package com.kisaraginoah.atamanikita;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class Config {
+public class CommonConfig {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.ConfigValue<Integer> BUDOU_JUSU_DURATION_EXTENDS;

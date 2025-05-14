@@ -22,11 +22,11 @@ public class Atamanikita {
         ModItems.REGISTER.register(modEventBus);
         ModCreativeTabs.REGISTER.register(modEventBus);
         ModBlocks.REGISTER.register(modEventBus);
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        if (Config.MUSIC_DISC_DROP.get()) {
+        if (CommonConfig.MUSIC_DISC_DROP.get()) {
             NeoForge.EVENT_BUS.register(MusicDiscDropEvent.class);
         }
     }

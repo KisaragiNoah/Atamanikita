@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
-import com.kisaraginoah.atamanikita.Config;
+import com.kisaraginoah.atamanikita.CommonConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -28,7 +28,7 @@ public class RingoJusu extends JusuBase {
         );
 
         if (!livingEntity.level().isClientSide && !effects.isEmpty()) {
-            int maxRemoveCount = Config.RINGO_JUSU_REMOVE_EFFECT_VALUE.get();
+            int maxRemoveCount = CommonConfig.RINGO_JUSU_REMOVE_EFFECT_VALUE.get();
             int removeCount = Math.min(maxRemoveCount, effects.size());
 
             Random javaRandom = new Random(livingEntity.level().random.nextLong());

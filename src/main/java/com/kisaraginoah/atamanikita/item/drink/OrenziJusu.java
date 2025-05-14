@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
-import com.kisaraginoah.atamanikita.Config;
+import com.kisaraginoah.atamanikita.CommonConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -34,10 +34,10 @@ public class OrenziJusu extends JusuBase {
             RandomSource random = livingEntity.level().random;
             Collections.shuffle(effects, new Random(random.nextLong())); // シャッフル
 
-            int count = Math.min(Config.ORENZI_JUSU_EFFECT_VALUE.get(), effects.size()); // 効果の数を超えないように
+            int count = Math.min(CommonConfig.ORENZI_JUSU_EFFECT_VALUE.get(), effects.size()); // 効果の数を超えないように
 
-            int duration = Config.ORENZI_JUSU_EFFECT_DURATION.get();
-            int amplifier = Config.ORENZI_JUSU_EFFECT_AMPLIER.get();
+            int duration = CommonConfig.ORENZI_JUSU_EFFECT_DURATION.get();
+            int amplifier = CommonConfig.ORENZI_JUSU_EFFECT_AMPLIER.get();
 
             for (int i = 0; i < count; i++) {
                 Holder<MobEffect> effect = effects.get(i);

@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.event;
 
-import com.kisaraginoah.atamanikita.Config;
+import com.kisaraginoah.atamanikita.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ public class MusicDiscDropEvent {
         LivingEntity entity = event.getEntity();
 
         if (event.getSource().getEntity() instanceof Player && !(entity instanceof Player)) {
-            if (entity.level().random.nextFloat() < Config.MUSIC_DISC_DROP_CHANGE.get().floatValue() / 100) {
+            if (entity.level().random.nextFloat() < CommonConfig.MUSIC_DISC_DROP_CHANGE.get().floatValue() / 100) {
                 int index = entity.level().random.nextInt(DROP_CANDIDATES.size());
                 Item item = DROP_CANDIDATES.get(index).value();
                 ItemStack drop = new ItemStack(item);

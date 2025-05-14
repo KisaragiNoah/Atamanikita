@@ -1,6 +1,6 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
-import com.kisaraginoah.atamanikita.Config;
+import com.kisaraginoah.atamanikita.CommonConfig;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,7 +20,7 @@ public class BudouJusu extends JusuBase {
         if (!livingEntity.level().isClientSide) {
             for (MobEffectInstance effectInstance : livingEntity.getActiveEffects()) {
                 if (effectInstance.getEffect().value().isBeneficial()) {
-                    livingEntity.addEffect(new MobEffectInstance(effectInstance.getEffect(), effectInstance.getDuration() + Config.BUDOU_JUSU_DURATION_EXTENDS.get(), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
+                    livingEntity.addEffect(new MobEffectInstance(effectInstance.getEffect(), effectInstance.getDuration() + CommonConfig.BUDOU_JUSU_DURATION_EXTENDS.get(), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
                 }
             }
         }
