@@ -1,7 +1,5 @@
 package com.kisaraginoah.atamanikita.item.tool;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -35,7 +33,6 @@ import net.neoforged.neoforge.common.ItemAbility;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -44,17 +41,6 @@ import java.util.function.Predicate;
 @MethodsReturnNonnullByDefault
 public class UniversalTool extends Item {
 
-    protected static final Map<Block, BlockState> FLATTENABLES = Maps.newHashMap(
-            new ImmutableMap.Builder()
-                    .put(Blocks.GRASS_BLOCK, Blocks.DIRT_PATH.defaultBlockState())
-                    .put(Blocks.DIRT, Blocks.DIRT_PATH.defaultBlockState())
-                    .put(Blocks.PODZOL, Blocks.DIRT_PATH.defaultBlockState())
-                    .put(Blocks.COARSE_DIRT, Blocks.DIRT_PATH.defaultBlockState())
-                    .put(Blocks.MYCELIUM, Blocks.DIRT_PATH.defaultBlockState())
-                    .put(Blocks.ROOTED_DIRT, Blocks.DIRT_PATH.defaultBlockState())
-                    .build()
-    );
-
     public UniversalTool() {
         super(new Properties().stacksTo(1).durability(100000).component(DataComponents.TOOL, new Tool(List.of(Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")), 20.0F), Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/axe")), 20.0F), Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), 20.0F)), 20.0F, 1)).rarity(Rarity.EPIC));
     }
@@ -62,6 +48,14 @@ public class UniversalTool extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.translatable("item.atamanikita.universal_tool.desc1"));
+    }
+
+    @Override
+    public float getDestroySpeed(ItemStack stack, BlockState state) {
+        Block block = state.getBlock();
+        float hardness = block.defaultDestroyTime();
+        System.out.println(hardness);
+        return 30.0F * hardness;
     }
 
     @Override
@@ -186,7 +180,10 @@ public class UniversalTool extends Item {
 
     private static boolean playerHasShieldUseIntent(UseOnContext context) {
         Player player = context.getPlayer();
-        return context.getHand().equals(InteractionHand.MAIN_HAND) && player.getOffhandItem().is(Items.SHIELD) && !player.isSecondaryUseActive();
+        if (player != null) {
+            return context.getHand().equals(InteractionHand.MAIN_HAND) && player.getOffhandItem().is(Items.SHIELD) && !player.isSecondaryUseActive();
+        }
+        return false;
     }
 
     private Optional<BlockState> evaluateNewBlockState(Level level, BlockPos pos, @Nullable Player player, BlockState state, UseOnContext p_40529_) {
