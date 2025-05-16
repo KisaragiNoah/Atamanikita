@@ -128,10 +128,10 @@ public class UniversalTool extends Item {
                         level.setBlock(blockPos, blockstate4, 11);
                         level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockstate4));
                         context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-                    } else {
-                        return InteractionResult.PASS;
                     }
                     return InteractionResult.sidedSuccess(level.isClientSide);
+                } else {
+                    return InteractionResult.PASS;
                 }
             } else if (pair != null && !player.isShiftKeyDown()) {
                 Predicate<UseOnContext> predicate = pair.getFirst();
