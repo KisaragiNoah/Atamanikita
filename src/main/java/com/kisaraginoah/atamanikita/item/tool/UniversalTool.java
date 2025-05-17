@@ -1,6 +1,5 @@
 package com.kisaraginoah.atamanikita.item.tool;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -27,7 +26,6 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -38,30 +36,49 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class UniversalTool extends Item {
 
+    private static final float BASE_DESTROY_MULTIPLIER = 30.0F;
+    private static final int MAX_DURABILITY = 100_000;
+    private static final float TOOL_EFFICIENCY = 20.0F;
+    private static final float BASE_ATTACK_DAMAGE = 9.0F;
+    private static final float BASE_ATTACK_SPEED = -1.5F;
+
     public UniversalTool() {
-        super(new Properties().stacksTo(1).durability(100000).component(DataComponents.TOOL, new Tool(List.of(Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")), 20.0F), Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/axe")), 20.0F), Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), 20.0F)), 20.0F, 1)).rarity(Rarity.EPIC).attributes(ItemAttributeModifiers.builder().add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, 9.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, -1.5F, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND).build()));
+        super(createProperties());
+    }
+
+    private static Properties createProperties() {
+        Tool tool = new Tool(List.of(
+                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")), TOOL_EFFICIENCY),
+                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/axe")), TOOL_EFFICIENCY),
+                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), TOOL_EFFICIENCY)
+        ), TOOL_EFFICIENCY, 1);
+
+        return new Properties()
+                .stacksTo(1)
+                .durability(MAX_DURABILITY)
+                .component(DataComponents.TOOL, tool)
+                .rarity(Rarity.EPIC)
+                .attributes(ItemAttributeModifiers.builder()
+                        .add(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_ID, BASE_ATTACK_DAMAGE, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .add(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_ID, BASE_ATTACK_SPEED, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                        .build());
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.universal_tool.desc1"));
-        tooltipComponents.add(Component.translatable("item.atamanikita.universal_tool.desc2"));
-        tooltipComponents.add(Component.translatable("item.atamanikita.universal_tool.desc3"));
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc1"));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc2"));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc3"));
     }
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        Block block = state.getBlock();
-        float hardness = block.defaultDestroyTime();
-        System.out.println(hardness);
-        return 30.0F * hardness;
+        return BASE_DESTROY_MULTIPLIER * state.getBlock().defaultDestroyTime();
     }
 
     @Override
@@ -70,9 +87,9 @@ public class UniversalTool extends Item {
     }
 
     @Override
-    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+    public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!level.isClientSide && !state.is(BlockTags.FIRE)) {
-            stack.hurtAndBreak(1, entityLiving, EquipmentSlot.MAINHAND);
+            stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
         }
 
         return state.is(BlockTags.LEAVES)
@@ -87,21 +104,19 @@ public class UniversalTool extends Item {
     }
 
     @Override
-    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, net.minecraft.world.InteractionHand hand) {
-        if (entity instanceof net.neoforged.neoforge.common.IShearable target) {
+    public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
+        if (entity instanceof net.neoforged.neoforge.common.IShearable shearable) {
             BlockPos pos = entity.blockPosition();
-            boolean isClient = entity.level().isClientSide();
-            if (target.isShearable(player, stack, entity.level(), pos)) {
-                List<ItemStack> drops = target.onSheared(player, stack, entity.level(), pos);
+            Level level = entity.level();
+            boolean isClient = level.isClientSide();
+
+            if (shearable.isShearable(player, stack, level, pos)) {
+                List<ItemStack> drops = shearable.onSheared(player, stack, level, pos);
                 if (!isClient) {
-                    for(ItemStack drop : drops) {
-                        target.spawnShearedDrop(entity.level(), pos, drop);
-                    }
-                }
-                entity.gameEvent(GameEvent.SHEAR, player);
-                if (!isClient) {
+                    drops.forEach(drop -> shearable.spawnShearedDrop(level, pos, drop));
                     stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
                 }
+                entity.gameEvent(GameEvent.SHEAR, player);
                 return InteractionResult.sidedSuccess(isClient);
             }
         }
@@ -110,114 +125,138 @@ public class UniversalTool extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
-        Level level = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
         Player player = context.getPlayer();
-        BlockState blockstate = level.getBlockState(blockPos);
-        BlockState blockstate1 = blockstate.getToolModifiedState(context, ItemAbilities.SHEARS_TRIM, false);
-        BlockState toolModifiedState = level.getBlockState(blockPos).getToolModifiedState(context, ItemAbilities.HOE_TILL, false);
-        Pair<Predicate<UseOnContext>, Consumer<UseOnContext>> pair = toolModifiedState == null ? null : Pair.of(ctx -> true, changeIntoState(toolModifiedState));
-        if (player != null) {
-            if (context.getClickedFace() != Direction.DOWN && player.isShiftKeyDown()) {
-                BlockState blockstate3 = blockstate.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
-                BlockState blockstate4;
-                if (blockstate3 != null && level.getBlockState(blockPos.above()).isAir()) {
-                    level.playSound(player, blockPos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    blockstate4 = blockstate3;
-                } else if ((blockstate4 = blockstate.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false)) != null ) {
-                    if (!level.isClientSide) {
-                        level.levelEvent(null, 1009, blockPos, 0);
-                    }
-                }
-                if (blockstate4 != null) {
-                    if (!level.isClientSide) {
-                        level.setBlock(blockPos, blockstate4, 11);
-                        level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, blockstate4));
-                        context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                } else {
-                    return InteractionResult.PASS;
-                }
-            } else if (pair != null && !player.isShiftKeyDown()) {
-                Predicate<UseOnContext> predicate = pair.getFirst();
-                Consumer<UseOnContext> contextConsumer = pair.getSecond();
-                if (predicate.test(context)) {
-                    level.playSound(player, blockPos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    if (!level.isClientSide) {
-                        contextConsumer.accept(context);
-                        context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-                return InteractionResult.PASS;
-            } else if (!playerHasShieldUseIntent(context)) {
-                Optional<BlockState> optional = this.evaluateNewBlockState(level, blockPos, player, level.getBlockState(blockPos), context);
-                if (optional.isEmpty()) {
-                    return InteractionResult.PASS;
-                } else {
-                    ItemStack itemStack = context.getItemInHand();
-                    if (player instanceof ServerPlayer) {
-                        CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer) player, blockPos, itemStack);
-                    }
-                    level.setBlock(blockPos, optional.get(), 11);
-                    level.gameEvent(GameEvent.BLOCK_CHANGE, blockPos, GameEvent.Context.of(player, optional.get()));
-                    itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-            } else if (blockstate1 != null) {
-                ItemStack itemStack = context.getItemInHand();
-                if (player instanceof ServerPlayer) {
-                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer) player, blockPos, itemStack);
-                    itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
+        if (player == null) return InteractionResult.PASS;
+
+        if (context.getClickedFace() != Direction.DOWN && player.isShiftKeyDown()) {
+            return tryFlatten(context);
+        }
+
+        InteractionResult tillResult = tryTill(context);
+        if (tillResult != InteractionResult.PASS) return tillResult;
+
+        if (!playerHasShieldUseIntent(context)) {
+            return tryAxeActions(context);
+        }
+
+        return tryTrim(context);
+    }
+
+    private InteractionResult tryFlatten(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null) return InteractionResult.PASS;
+
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockState original = level.getBlockState(pos);
+        BlockState flattened = original.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
+
+        if (flattened != null && level.getBlockState(pos.above()).isAir()) {
+            level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!level.isClientSide) {
+                level.setBlock(pos, flattened, 11);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, flattened));
+                context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
             }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    private InteractionResult tryTill(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null || player.isShiftKeyDown()) return InteractionResult.PASS;
+
+        BlockState tilled = context.getLevel().getBlockState(context.getClickedPos())
+                .getToolModifiedState(context, ItemAbilities.HOE_TILL, false);
+
+        if (tilled != null) {
+            Level level = context.getLevel();
+            level.playSound(player, context.getClickedPos(), SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
+            if (!level.isClientSide) {
+                level.setBlock(context.getClickedPos(), tilled, 11);
+                context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
+                level.gameEvent(GameEvent.BLOCK_CHANGE, context.getClickedPos(), GameEvent.Context.of(player, tilled));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
 
-    public static Consumer<UseOnContext> changeIntoState(BlockState state) {
-        return p_316061_ -> {
-            p_316061_.getLevel().setBlock(p_316061_.getClickedPos(), state, 11);
-            p_316061_.getLevel().gameEvent(GameEvent.BLOCK_CHANGE, p_316061_.getClickedPos(), GameEvent.Context.of(p_316061_.getPlayer(), state));
-        };
+    private InteractionResult tryAxeActions(UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null) return InteractionResult.PASS;
+
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        BlockState original = level.getBlockState(pos);
+
+        Optional<BlockState> newState = evaluateNewBlockState(level, pos, player, original, context);
+        if (newState.isPresent()) {
+            BlockState newBlock = newState.get();
+            level.setBlock(pos, newBlock, 11);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newBlock));
+            context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
+
+            if (player instanceof ServerPlayer serverPlayer) {
+                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, context.getItemInHand());
+            }
+
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    private InteractionResult tryTrim(UseOnContext context) {
+        BlockState trimmed = context.getLevel()
+                .getBlockState(context.getClickedPos())
+                .getToolModifiedState(context, ItemAbilities.SHEARS_TRIM, false);
+
+        if (trimmed != null && context.getPlayer() instanceof ServerPlayer serverPlayer) {
+            context.getLevel().setBlock(context.getClickedPos(), trimmed, 11);
+            context.getItemInHand().hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(context.getHand()));
+            CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, context.getClickedPos(), context.getItemInHand());
+            return InteractionResult.sidedSuccess(context.getLevel().isClientSide);
+        }
+
+        return InteractionResult.PASS;
+    }
+
+    private Optional<BlockState> evaluateNewBlockState(Level level, BlockPos pos, @Nullable Player player, BlockState state, UseOnContext context) {
+        return Optional.ofNullable(state.getToolModifiedState(context, ItemAbilities.AXE_STRIP, false))
+                .or(() -> {
+                    BlockState scrape = state.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false);
+                    if (scrape != null) {
+                        level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.levelEvent(player, 3005, pos, 0);
+                    }
+                    return Optional.ofNullable(scrape);
+                })
+                .or(() -> {
+                    BlockState waxOff = state.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false);
+                    if (waxOff != null) {
+                        level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
+                        level.levelEvent(player, 3004, pos, 0);
+                    }
+                    return Optional.ofNullable(waxOff);
+                });
     }
 
     private static boolean playerHasShieldUseIntent(UseOnContext context) {
         Player player = context.getPlayer();
-        if (player != null) {
-            return context.getHand().equals(InteractionHand.MAIN_HAND) && player.getOffhandItem().is(Items.SHIELD) && !player.isSecondaryUseActive();
-        }
-        return false;
-    }
-
-    private Optional<BlockState> evaluateNewBlockState(Level level, BlockPos pos, @Nullable Player player, BlockState state, UseOnContext p_40529_) {
-        Optional<BlockState> optional = Optional.ofNullable(state.getToolModifiedState(p_40529_, ItemAbilities.AXE_STRIP, false));
-        if (optional.isPresent()) {
-            level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-            return optional;
-        } else {
-            Optional<BlockState> optional1 = Optional.ofNullable(state.getToolModifiedState(p_40529_, ItemAbilities.AXE_SCRAPE, false));
-            if (optional1.isPresent()) {
-                level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
-                level.levelEvent(player, 3005, pos, 0);
-                return optional1;
-            } else {
-                Optional<BlockState> optional2 = Optional.ofNullable(state.getToolModifiedState(p_40529_, ItemAbilities.AXE_WAX_OFF, false));
-                if (optional2.isPresent()) {
-                    level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
-                    level.levelEvent(player, 3004, pos, 0);
-                    return optional2;
-                } else {
-                    return Optional.empty();
-                }
-            }
-        }
+        return player != null &&
+                context.getHand() == InteractionHand.MAIN_HAND &&
+                player.getOffhandItem().is(Items.SHIELD) &&
+                !player.isSecondaryUseActive();
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
-        return ItemAbilities.DEFAULT_AXE_ACTIONS.contains(itemAbility) || ItemAbilities.DEFAULT_HOE_ACTIONS.contains(itemAbility) || ItemAbilities.DEFAULT_SHEARS_ACTIONS.contains(itemAbility) || ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(itemAbility);
+    public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
+        return ItemAbilities.DEFAULT_AXE_ACTIONS.contains(ability)
+                || ItemAbilities.DEFAULT_HOE_ACTIONS.contains(ability)
+                || ItemAbilities.DEFAULT_SHEARS_ACTIONS.contains(ability)
+                || ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(ability);
     }
 }
