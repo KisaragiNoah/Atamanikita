@@ -20,5 +20,7 @@
   "item.atamanikita.megalovania_music_disc.desc": "Megalovania - Toby Fox",
 
   "item.atamanikita.universal_tool": "ユニバーサルツール",
-  "item.atamanikita.universal_tool.desc1": "§dどこでも使える採掘ツール"
+  "item.atamanikita.universal_tool.desc1": "§bなんにでも使える最強のツール",
+  "item.atamanikita.universal_tool.desc2": "§b土系のアイテムを普通に右クリックするとくわ",
+  "item.atamanikita.universal_tool.desc3": "§bシフトキーを押しながらだとシャベルの機能になる"
 }
