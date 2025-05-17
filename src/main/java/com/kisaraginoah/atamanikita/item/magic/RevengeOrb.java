@@ -4,8 +4,10 @@ import com.kisaraginoah.atamanikita.util.EntityUtils;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -13,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -51,10 +54,20 @@ public class RevengeOrb extends Item {
                 }
                 for(Entity entity : EntityUtils.getNearbyEntities(player, 5)) {
                     if (entity instanceof LivingEntity target) {
-                        System.out.println(player.getPersistentData().getFloat("LastDamageTaken") * 2F);
                         target.hurt(player.damageSources().playerAttack(player), player.getPersistentData().getFloat("LastDamageTaken") * 2F);
                         level.playSound(target, target.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
-                        level.addParticle(ParticleTypes.CRIT, target.getX(), target.getY(), target.getZ(), 1, 0, 1);
+                        if (level instanceof ServerLevel serverLevel) {
+                            AABB aabb = entity.getBoundingBox().inflate(0.2);
+                            RandomSource random = serverLevel.getRandom();
+
+                            for (int i = 0; i < 20; i++) {
+                                double x = aabb.minX + (aabb.maxX - aabb.minX) * random.nextDouble();
+                                double y = aabb.minY + (aabb.maxY - aabb.minY) * random.nextDouble();
+                                double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * random.nextDouble();
+
+                                serverLevel.sendParticles(ParticleTypes.FIREWORK, x, y, z, 1, 0, 0.01, 0, 0);
+                            }
+                        }
                     }
                 }
                 player.getCooldowns().addCooldown(stack.getItem(), 200);
