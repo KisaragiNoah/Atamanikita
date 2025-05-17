@@ -27,6 +27,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.RINGO_JUSU.value());
                             output.accept(ModItems.ORENZI_JUSU.value());
                             output.accept(ModItems.UNIVERSAL_TOOL.value());
+                            output.accept(ModItems.REVENGE_ORB.value());
                         }).withSearchBar().build()
         );
     }

@@ -22,5 +22,11 @@
   "item.atamanikita.universal_tool": "ユニバーサルツール",
   "item.atamanikita.universal_tool.desc1": "§bなんにでも使える最強のツール",
   "item.atamanikita.universal_tool.desc2": "§b土系のアイテムを普通に右クリックするとくわ",
-  "item.atamanikita.universal_tool.desc3": "§bシフトキーを押しながらだとシャベルの機能になる"
+  "item.atamanikita.universal_tool.desc3": "§bシフトキーを押しながらだとシャベルの機能になる",
+
+  "item.atamanikita.revenge_orb": "リベンジオーブ",
+  "item.atamanikita.revenge_orb.desc1": "§b最後に受けたダメージの2倍のダメージを周囲5ブロックの敵に与える",
+  "item.atamanikita.revenge_orb.desc2": "§bクールダウン：10秒　失敗時：5秒",
+  "item.atamanikita.revenge_orb.fail": "近くに敵エンティティがいませんでした",
+  "item.atamanikita.revenge_orb.fail1": "最後に受けたダメージがありませんでした"
 }
