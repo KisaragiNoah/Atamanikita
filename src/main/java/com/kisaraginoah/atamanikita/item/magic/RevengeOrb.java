@@ -60,12 +60,19 @@ public class RevengeOrb extends Item {
                             AABB aabb = entity.getBoundingBox().inflate(0.2);
                             RandomSource random = serverLevel.getRandom();
 
-                            for (int i = 0; i < 30; i++) {
+                            for (int i = 0; i < 20; i++) {
                                 double x = aabb.minX + (aabb.maxX - aabb.minX) * random.nextDouble();
                                 double y = aabb.minY + (aabb.maxY - aabb.minY) * random.nextDouble();
                                 double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * random.nextDouble();
 
                                 serverLevel.sendParticles(ParticleTypes.FIREWORK, x, y, z, 1, 0, 0.01, 0, 0);
+                            }
+                            for (int i = 0; i < 20; i++) {
+                                double x = aabb.minX + (aabb.maxX - aabb.minX) * random.nextDouble();
+                                double y = aabb.minY + (aabb.maxY - aabb.minY) * random.nextDouble();
+                                double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * random.nextDouble();
+
+                                serverLevel.sendParticles(ParticleTypes.CRIT, x, y, z, 1, 0, 0.01, 0, 0);
                             }
                         }
                     }
