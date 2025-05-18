@@ -62,6 +62,7 @@ public class RevengeOrb extends Item {
                                 dx /= distance;
                                 dz /= distance;
                                 target.knockback(1.0F, dx, dz);
+                                target.hasImpulse = true;
                             }
                             level.playSound(target, target.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
                             if (level instanceof ServerLevel serverLevel) {
