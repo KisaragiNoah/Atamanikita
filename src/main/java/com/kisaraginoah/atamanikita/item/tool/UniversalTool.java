@@ -41,7 +41,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 public class UniversalTool extends Item {
 
-    private static final float BASE_DESTROY_MULTIPLIER = 30.0F;
+    private static final float BASE_DESTROY_MULTIPLIER = 10000.0F;
     private static final int MAX_DURABILITY = 100_000;
     private static final float TOOL_EFFICIENCY = 20.0F;
     private static final float BASE_ATTACK_DAMAGE = 9.0F;
@@ -55,7 +55,8 @@ public class UniversalTool extends Item {
         Tool tool = new Tool(List.of(
                 Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")), TOOL_EFFICIENCY),
                 Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/axe")), TOOL_EFFICIENCY),
-                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), TOOL_EFFICIENCY)
+                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), TOOL_EFFICIENCY),
+                Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/hoe")), TOOL_EFFICIENCY)
         ), TOOL_EFFICIENCY, 1);
 
         return new Properties()
@@ -78,6 +79,9 @@ public class UniversalTool extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
+        if (state.getBlock().defaultDestroyTime() == 0) {
+            return 1.0F;
+        }
         return BASE_DESTROY_MULTIPLIER * state.getBlock().defaultDestroyTime();
     }
 
@@ -85,6 +89,8 @@ public class UniversalTool extends Item {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
+
+
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
@@ -253,10 +259,15 @@ public class UniversalTool extends Item {
     }
 
     @Override
+    public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
+        return !player.isCreative();
+    }
+
+    @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
-        return ItemAbilities.DEFAULT_AXE_ACTIONS.contains(ability)
+        return ItemAbilities.DEFAULT_SHEARS_ACTIONS.contains(ability)
                 || ItemAbilities.DEFAULT_HOE_ACTIONS.contains(ability)
-                || ItemAbilities.DEFAULT_SHEARS_ACTIONS.contains(ability)
+                || ItemAbilities.DEFAULT_AXE_ACTIONS.contains(ability)
                 || ItemAbilities.DEFAULT_SHOVEL_ACTIONS.contains(ability);
     }
 }
