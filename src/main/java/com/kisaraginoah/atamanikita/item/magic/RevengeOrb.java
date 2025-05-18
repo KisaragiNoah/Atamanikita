@@ -81,7 +81,7 @@ public class RevengeOrb extends Item {
                                     double y = aabb.minY + (aabb.maxY - aabb.minY) * random.nextDouble();
                                     double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * random.nextDouble();
 
-                                    serverLevel.sendParticles(ParticleTypes.CRIT, x, y, z, 1, 0, 0.01, 0, 0);
+                                    serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, x, y, z, 1, 0, 0.01, 0, 0);
                                 }
                             }
                         }
