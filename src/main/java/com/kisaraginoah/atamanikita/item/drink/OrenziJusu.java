@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -48,6 +49,7 @@ public class OrenziJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc1"));
+        tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc1", CommonConfig.ORENZI_JUSU_EFFECT_VALUE.get()).withStyle(ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc2", CommonConfig.ORENZI_JUSU_EFFECT_DURATION.get() / 1200, CommonConfig.ORENZI_JUSU_EFFECT_AMPLIER.get()).withStyle(ChatFormatting.YELLOW));
     }
 }

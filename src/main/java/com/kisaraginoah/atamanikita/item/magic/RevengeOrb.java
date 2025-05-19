@@ -1,6 +1,8 @@
 package com.kisaraginoah.atamanikita.item.magic;
 
+import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.util.EntityUtils;
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -47,14 +49,14 @@ public class RevengeOrb extends Item {
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
         if (livingEntity instanceof Player player && !level.isClientSide) {
             if (player.getPersistentData().getFloat("LastDamageTaken") > 0) {
-                if (EntityUtils.getNearbyEntities(player, 5).isEmpty()) {
+                if (EntityUtils.getNearbyEntities(player, CommonConfig.REVENGE_ORB_RADIUS.get()).isEmpty()) {
                     player.sendSystemMessage(Component.translatable("item.atamanikita.revenge_orb.fail"));
                     player.getCooldowns().addCooldown(stack.getItem(), 100);
                     return super.finishUsingItem(stack, level, livingEntity);
                 } else {
-                    for(Entity entity : EntityUtils.getNearbyEntities(player, 5)) {
+                    for(Entity entity : EntityUtils.getNearbyEntities(player, CommonConfig.REVENGE_ORB_RADIUS.get())) {
                         if (entity instanceof LivingEntity target) {
-                            target.hurt(player.damageSources().playerAttack(player), player.getPersistentData().getFloat("LastDamageTaken") * 2F);
+                            target.hurt(player.damageSources().playerAttack(player), player.getPersistentData().getFloat("LastDamageTaken") * CommonConfig.REVENGE_ORB_MULTIPLIER.get().floatValue());
                             double dx = player.getX() - target.getX();
                             double dz = player.getZ() - target.getZ();
                             double distance = Math.sqrt(dx * dx + dz * dz);
@@ -98,7 +100,7 @@ public class RevengeOrb extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc1"));
-        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc2"));
+        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc1", CommonConfig.REVENGE_ORB_MULTIPLIER.get(), CommonConfig.REVENGE_ORB_RADIUS.get()).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc2").withStyle(ChatFormatting.AQUA));
     }
 }

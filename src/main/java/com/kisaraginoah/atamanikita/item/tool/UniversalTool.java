@@ -1,5 +1,6 @@
 package com.kisaraginoah.atamanikita.item.tool;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -72,9 +73,9 @@ public class UniversalTool extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc1"));
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc2"));
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc3"));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc1").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc2").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc3").withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 
     @Override

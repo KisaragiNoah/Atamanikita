@@ -8,25 +8,26 @@
   "item.atamanikita.asuretikku_music_disc.desc": "アスレチック - Nintendo",
 
   "item.atamanikita.budou_jusu": "ぶどうジュース",
-  "item.atamanikita.budou_jusu.desc1": "§d飲むとポーションの効果時間が1分増える",
+  "item.atamanikita.budou_jusu.desc1": "飲むとポーションの効果時間が%1$.1f分増える",
 
   "item.atamanikita.ringo_jusu": "りんごジュース",
-  "item.atamanikita.ringo_jusu.desc1": "§d飲むと悪いポーション効果をランダムで１つ削除する",
+  "item.atamanikita.ringo_jusu.desc1": "飲むと悪いポーション効果をランダムで%1$dつ削除する",
 
   "item.atamanikita.orenzi_jusu": "オレンジジュース",
-  "item.atamanikita.orenzi_jusu.desc1": "§d飲むと良いポーション効果をランダムで１つ獲得する",
+  "item.atamanikita.orenzi_jusu.desc1": "飲むと良いポーション効果をランダムで%1$dつ獲得する",
+  "item.atamanikita.orenzi_jusu.desc2": "効果時間：%1$.1f 効果レベル：%2$d",
 
   "item.atamanikita.megalovania_music_disc": "Megalovaniaのレコード",
   "item.atamanikita.megalovania_music_disc.desc": "Megalovania - Toby Fox",
 
   "item.atamanikita.universal_tool": "ユニバーサルツール",
-  "item.atamanikita.universal_tool.desc1": "§bなんにでも使える最強のツール",
-  "item.atamanikita.universal_tool.desc2": "§b土系のアイテムを普通に右クリックするとくわ",
-  "item.atamanikita.universal_tool.desc3": "§bシフトキーを押しながらだとシャベルの機能になる",
+  "item.atamanikita.universal_tool.desc1": "なんにでも使える最強のツール",
+  "item.atamanikita.universal_tool.desc2": "土系のアイテムを普通に右クリックするとくわ",
+  "item.atamanikita.universal_tool.desc3": "シフトキーを押しながらだとシャベルの機能になる",
 
   "item.atamanikita.revenge_orb": "リベンジオーブ",
-  "item.atamanikita.revenge_orb.desc1": "§b最後に受けたダメージの2倍のダメージを周囲5ブロックの敵に与える",
-  "item.atamanikita.revenge_orb.desc2": "§bクールダウン：10秒　失敗時：5秒",
+  "item.atamanikita.revenge_orb.desc1": "最後に受けたダメージの%1$.1f倍のダメージを周囲%2$dブロックの敵に与える",
+  "item.atamanikita.revenge_orb.desc2": "クールダウン：10秒　失敗時：5秒",
   "item.atamanikita.revenge_orb.fail": "近くに敵エンティティがいませんでした",
   "item.atamanikita.revenge_orb.fail1": "最後に受けたダメージがありませんでした"
 }

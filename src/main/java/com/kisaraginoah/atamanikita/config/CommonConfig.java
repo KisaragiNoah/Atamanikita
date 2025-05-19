@@ -15,6 +15,8 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Double> MUSIC_DISC_DROP_CHANGE;
     public static final ModConfigSpec.ConfigValue<Boolean> UNIVERSAL_TOOL_DROP;
     public static final ModConfigSpec.ConfigValue<Double> UNIVERSAL_TOOL_DROP_CHANCE;
+    public static final ModConfigSpec.ConfigValue<Double> REVENGE_ORB_MULTIPLIER;
+    public static final ModConfigSpec.ConfigValue<Double> REVENGE_ORB_RADIUS;
 
     static {
         BUILDER.push("common");
@@ -45,6 +47,13 @@ public class CommonConfig {
         UNIVERSAL_TOOL_DROP_CHANCE = BUILDER
                 .comment("ユニバーサルツールのドロップ確率（％）")
                 .defineInRange("universal_tool_drop_change", 0.0001, 0, 100);
+        REVENGE_ORB_MULTIPLIER = BUILDER
+                .comment("リベンジオーブのダメージ乗数")
+                .defineInRange("revenge_orb_multiplier", 2.0F, 0.01F, Float.MAX_VALUE);
+        REVENGE_ORB_RADIUS = BUILDER
+                .comment("リベンジオーブの効果範囲")
+                .comment("注意！！！この値を大きくしすぎると不具合が発生する場合があります！！！")
+                .defineInRange("revenge_orb_radius", 5.0, 0.1, Double.MAX_VALUE);
         BUILDER.pop();
     }
 

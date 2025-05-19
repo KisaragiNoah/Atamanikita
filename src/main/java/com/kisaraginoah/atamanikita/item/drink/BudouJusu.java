@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -28,6 +29,6 @@ public class BudouJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.budou_jusu.desc1"));
+        tooltipComponents.add(Component.translatable("item.atamanikita.budou_jusu.desc1", CommonConfig.BUDOU_JUSU_DURATION_EXTENDS.get().floatValue() / 1200).withStyle(ChatFormatting.DARK_PURPLE));
     }
 }
