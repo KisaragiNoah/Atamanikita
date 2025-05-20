@@ -36,7 +36,7 @@ public class OrenziJusu extends JusuBase {
                         .toList()
         );
 
-        if (livingEntity.level().isClientSide && !effects.isEmpty()) {
+        if (!livingEntity.level().isClientSide && !effects.isEmpty()) {
             RandomSource random = livingEntity.level().random;
             Collections.shuffle(effects, new Random(random.nextLong())); // シャッフル
 

@@ -8,6 +8,7 @@ import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.MegalovaniaMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.OhanabatakeMusicDisc;
+import com.kisaraginoah.atamanikita.item.tool.LevelUpPickaxe;
 import com.kisaraginoah.atamanikita.item.tool.UniversalTool;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -27,4 +28,5 @@ public class ModItems {
 
     public static final Holder<Item> UNIVERSAL_TOOL = REGISTER.register("universal_tool", UniversalTool::new);
     public static final Holder<Item> REVENGE_ORB = REGISTER.register("revenge_orb", RevengeOrb::new);
+    public static final Holder<Item> LEVEL_UP_PICKAXE = REGISTER.register("level_up_pickaxe", LevelUpPickaxe::new);
 }

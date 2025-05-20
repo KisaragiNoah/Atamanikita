@@ -28,6 +28,12 @@ public class ModCreativeTabs {
                             output.accept(ModItems.ORENZI_JUSU.value());
                             output.accept(ModItems.UNIVERSAL_TOOL.value());
                             output.accept(ModItems.REVENGE_ORB.value());
+                            ItemStack levelUpPickaxeStack = new ItemStack(ModItems.LEVEL_UP_PICKAXE);
+                            levelUpPickaxeStack.set(ModDataComponents.MINING, 0L);
+                            levelUpPickaxeStack.set(ModDataComponents.MINING_LEVEL, 1L);
+                            int maxDamage = (int)(Math.pow(10, 1) - Math.pow(10, 0));
+                            levelUpPickaxeStack.setDamageValue(maxDamage);
+                            output.accept(levelUpPickaxeStack);
                         }).withSearchBar().build()
         );
     }

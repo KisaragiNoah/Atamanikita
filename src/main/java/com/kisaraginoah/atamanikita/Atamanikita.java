@@ -2,6 +2,7 @@ package com.kisaraginoah.atamanikita;
 
 import com.kisaraginoah.atamanikita.config.ClientConfig;
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import com.kisaraginoah.atamanikita.init.ModDataComponents;
 import com.kisaraginoah.atamanikita.event.BlockBreakDropEvent;
 import com.kisaraginoah.atamanikita.event.MusicDiscDropEvent;
 import com.kisaraginoah.atamanikita.init.ModBlocks;
@@ -25,6 +26,7 @@ public class Atamanikita {
         ModItems.REGISTER.register(modEventBus);
         ModCreativeTabs.REGISTER.register(modEventBus);
         ModBlocks.REGISTER.register(modEventBus);
+        ModDataComponents.REGISTER.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }
