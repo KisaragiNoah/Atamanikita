@@ -34,7 +34,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 public class LevelUpPickaxe extends Item {
 
-    private static final float MINING_SPEED = 2.0F;
+    private static final float MINING_SPEED = 5.0F;
 
     public LevelUpPickaxe() {
         super(new Properties().stacksTo(1).component(DataComponents.TOOL, new Tool(List.of(
@@ -44,6 +44,9 @@ public class LevelUpPickaxe extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
+        if (!state.is(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")))&& !stack.isCorrectToolForDrops(state)) {
+            return 0F;
+        }
         long level = Optional.ofNullable(stack.get(ModDataComponents.MINING_LEVEL)).orElse(1L);
         return MINING_SPEED * (float)Math.pow(2, level - 1);
     }
