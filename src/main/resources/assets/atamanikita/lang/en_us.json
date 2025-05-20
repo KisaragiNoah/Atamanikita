@@ -32,7 +32,9 @@
   "item.atamanikita.revenge_orb.fail1": "最後に受けたダメージがありませんでした",
 
   "item.atamanikita.level_up_pickaxe": "レベルアップピッケル",
-  "item.atamanikita.level_up_pickaxe.desc1": "採掘すればするほど強くなるピッケル",
-  "item.atamanikita.level_up_pickaxe.desc2": "現在のレベル：%1$d",
-  "item.atamanikita.level_up_pickaxe.desc3": "レベルアップまで残り：%1$dブロック"
+  "item.atamanikita.level_up_pickaxe.desc1": "特殊効果付きのピッケル",
+  "item.atamanikita.level_up_pickaxe.level": "レベル: %s",
+  "item.atamanikita.level_up_pickaxe.remaining": "次のレベルまで: %s ブロック",
+  "item.atamanikita.level_up_pickaxe.percent": "進捗: %s%%"
+
 }

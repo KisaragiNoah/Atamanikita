@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.init;
 
 import com.kisaraginoah.atamanikita.Atamanikita;
+import com.kisaraginoah.atamanikita.util.MathUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -31,7 +32,7 @@ public class ModCreativeTabs {
                             ItemStack levelUpPickaxeStack = new ItemStack(ModItems.LEVEL_UP_PICKAXE);
                             levelUpPickaxeStack.set(ModDataComponents.MINING, 0L);
                             levelUpPickaxeStack.set(ModDataComponents.MINING_LEVEL, 1L);
-                            int maxDamage = (int)(Math.pow(10, 1) - Math.pow(10, 0));
+                            int maxDamage = (int)(MathUtils.customPow(10, 1) - MathUtils.customPow(10, 0));
                             levelUpPickaxeStack.setDamageValue(maxDamage);
                             output.accept(levelUpPickaxeStack);
                         }).withSearchBar().build()
