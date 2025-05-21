@@ -18,6 +18,9 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Long>> MINING = register("mining",
             integerBuilder -> integerBuilder.persistent(Codec.LONG));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> REVENGE_DAMAGE = register("revenge_damage",
+            floatBuilder -> floatBuilder.persistent(Codec.FLOAT));
+
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
         return REGISTER.register(name, () -> builderUnaryOperator.apply(DataComponentType.builder()).build());
     }

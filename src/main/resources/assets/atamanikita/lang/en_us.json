@@ -28,6 +28,7 @@
   "item.atamanikita.revenge_orb": "リベンジオーブ",
   "item.atamanikita.revenge_orb.desc1": "最後に受けたダメージの%1$.1f倍のダメージを周囲%2$dブロックの敵に与える",
   "item.atamanikita.revenge_orb.desc2": "クールダウン：10秒　失敗時：5秒",
+  "item.atamanikita.revenge_orb.desc3": "現在のリベンジダメージ：%1$.1fダメージ",
   "item.atamanikita.revenge_orb.fail": "近くに敵エンティティがいませんでした",
   "item.atamanikita.revenge_orb.fail1": "最後に受けたダメージがありませんでした",
 
