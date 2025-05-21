@@ -5,6 +5,7 @@ import com.kisaraginoah.atamanikita.item.drink.BudouJusu;
 import com.kisaraginoah.atamanikita.item.drink.OrenziJusu;
 import com.kisaraginoah.atamanikita.item.drink.RingoJusu;
 import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
+import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.MegalovaniaMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.OhanabatakeMusicDisc;
@@ -27,6 +28,8 @@ public class ModItems {
     public static final Holder<Item> ORENZI_JUSU = REGISTER.register("orenzi_jusu", OrenziJusu::new);
 
     public static final Holder<Item> UNIVERSAL_TOOL = REGISTER.register("universal_tool", UniversalTool::new);
-    public static final Holder<Item> REVENGE_ORB = REGISTER.register("revenge_orb", RevengeOrb::new);
     public static final Holder<Item> LEVEL_UP_PICKAXE = REGISTER.register("level_up_pickaxe", LevelUpPickaxe::new);
+
+    public static final Holder<Item> REVENGE_ORB = REGISTER.register("revenge_orb", RevengeOrb::new);
+    public static final Holder<Item> WARP_STONE = REGISTER.register("warp_stone", WarpStone::new);
 }

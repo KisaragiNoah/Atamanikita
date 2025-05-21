@@ -35,6 +35,7 @@ public class ModCreativeTabs {
                             int maxDamage = (int)(MathUtils.customPow(10, 1) - MathUtils.customPow(10, 0));
                             levelUpPickaxeStack.setDamageValue(maxDamage);
                             output.accept(levelUpPickaxeStack);
+                            output.accept(ModItems.WARP_STONE.value());
                         }).withSearchBar().build()
         );
     }
