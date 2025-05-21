@@ -39,7 +39,7 @@ public class LevelUpPickaxe extends Item {
     public LevelUpPickaxe() {
         super(new Properties().stacksTo(1).component(DataComponents.TOOL, new Tool(List.of(
                 Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")), 0F)
-        ), 0F, 0)));
+        ), 0F, 0)).component(ModDataComponents.MINING_LEVEL, 1L).component(ModDataComponents.MINING, 0L));
     }
 
     @Override
