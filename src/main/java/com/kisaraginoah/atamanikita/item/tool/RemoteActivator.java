@@ -35,16 +35,18 @@ public class RemoteActivator extends Item {
         }
 
         ItemStack offhandStack = player.getOffhandItem();
-        if (!offhandStack.isEmpty()) {
-            offhandStack.use(level, player, InteractionHand.OFF_HAND);
-            return InteractionResultHolder.pass(mainStack);
-        }
-
         if (!level.isClientSide && !player.isShiftKeyDown()) {
             if (player.getCooldowns().isOnCooldown(this)) {
                 player.displayClientMessage(Component.literal("クールダウン中です"), true);
                 return InteractionResultHolder.pass(mainStack);
             }
+
+            // オフハンドアイテムを使う（あれば）
+            if (!offhandStack.isEmpty()) {
+                offhandStack.use(level, player, InteractionHand.OFF_HAND);
+            }
+
+            // 遠隔インタラクションを試みる
             BlockPos pos = mainStack.get(ModDataComponents.INTERACTION_POS);
             if (pos != null) {
                 BlockState state = level.getBlockState(pos);
@@ -61,7 +63,6 @@ public class RemoteActivator extends Item {
             } else {
                 player.displayClientMessage(Component.literal("ターゲット座標が設定されていません"), true);
             }
-
         }
         return InteractionResultHolder.pass(player.getItemInHand(usedHand));
     }
