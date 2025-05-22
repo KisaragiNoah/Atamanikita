@@ -36,6 +36,7 @@ public class ModCreativeTabs {
                             levelUpPickaxeStack.setDamageValue(maxDamage);
                             output.accept(levelUpPickaxeStack);
                             output.accept(ModItems.WARP_STONE.value());
+                            output.accept(ModItems.REMOTE_ACTIVATOR.value());
                         }).withSearchBar().build()
         );
     }

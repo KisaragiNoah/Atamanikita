@@ -2,6 +2,7 @@ package com.kisaraginoah.atamanikita.init;
 
 import com.kisaraginoah.atamanikita.Atamanikita;
 import com.mojang.serialization.Codec;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -29,6 +30,9 @@ public class ModDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ResourceKey<Level>>> WARP_DIMENSION = register("warp_dimension",
             resourceKeyBuilder -> resourceKeyBuilder.persistent(ResourceKey.codec(Registries.DIMENSION)));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> INTERACTION_POS = register("interaction_pos",
+            blockPosBuilder -> blockPosBuilder.persistent(BlockPos.CODEC));
 
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
         return REGISTER.register(name, () -> builderUnaryOperator.apply(DataComponentType.builder()).build());

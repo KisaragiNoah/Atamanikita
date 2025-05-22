@@ -44,6 +44,8 @@
   "item.atamanikita.warp_stone.desc1": "指定した場所にワープできる石",
   "item.atamanikita.warp_stone.desc2": "座標：X %1$.1f, Y %2$.1f, Z %3$.1f",
   "item.atamanikita.warp_stone.desc3": "ディメンション：%s",
-  "item.atamanikita.warp_stone.desc4": "座標：なし"
+  "item.atamanikita.warp_stone.desc4": "座標：なし",
+
+  "item.atamanikita.remote_activator": "リモートアクセス"
 
 }
