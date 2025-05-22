@@ -17,6 +17,7 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Double> UNIVERSAL_TOOL_DROP_CHANCE;
     public static final ModConfigSpec.ConfigValue<Double> REVENGE_ORB_MULTIPLIER;
     public static final ModConfigSpec.ConfigValue<Double> REVENGE_ORB_RADIUS;
+    public static final ModConfigSpec.ConfigValue<Integer> WARP_STONE_USE_TIME;
     public static final ModConfigSpec.ConfigValue<Integer> WARP_STONE_COOLDOWN;
 
     static {
@@ -55,6 +56,9 @@ public class CommonConfig {
                 .comment("リベンジオーブの効果範囲")
                 .comment("注意！！！この値を大きくしすぎると不具合が発生する場合があります！！！")
                 .defineInRange("revenge_orb_radius", 5.0, 0.1, Double.MAX_VALUE);
+        WARP_STONE_USE_TIME = BUILDER
+                .comment("ワープストーン発動までの時間")
+                .defineInRange("warp_stone_use_time", 100, 0, Integer.MAX_VALUE);
         WARP_STONE_COOLDOWN = BUILDER
                 .comment("ワープストーンのクールダウン")
                 .defineInRange("warp_stone_cooldown", 100, 0, Integer.MAX_VALUE);

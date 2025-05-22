@@ -32,7 +32,7 @@ public class WarpStone extends Item {
 
     @Override
     public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        return 100;
+        return CommonConfig.WARP_STONE_USE_TIME.get();
     }
 
     @Override
