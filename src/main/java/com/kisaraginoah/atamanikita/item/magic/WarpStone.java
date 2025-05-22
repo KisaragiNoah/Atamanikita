@@ -18,6 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
@@ -87,7 +89,7 @@ public class WarpStone extends Item {
             Component dimensionName = Language.getInstance().has(dimKey)
                     ? Component.translatable(dimKey)
                     : Component.literal(targetDimension.location().toString());
-            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc2", Math.round(vec3.x), Math.round(vec3.y), Math.round(vec3.z)).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc2", new BigDecimal(vec3.x).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.y).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.z).setScale(1, RoundingMode.HALF_UP)).withStyle(ChatFormatting.BLUE));
             tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc3", dimensionName).withStyle(ChatFormatting.BLUE));
         }
     }
