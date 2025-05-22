@@ -1,5 +1,6 @@
 package com.kisaraginoah.atamanikita.item.magic;
 
+import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModDataComponents;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -64,7 +65,7 @@ public class WarpStone extends Item {
                 ServerLevel targetLevel = server.getLevel(targetDimension);
                 if (targetLevel != null) {
                     player.teleportTo(targetLevel, vec3.x, vec3.y, vec3.z, RelativeMovement.ROTATION, player.getYRot(), player.getXRot());
-                    player.getCooldowns().addCooldown(stack.getItem(), 100);
+                    player.getCooldowns().addCooldown(stack.getItem(), CommonConfig.WARP_STONE_COOLDOWN.get());
                 } else {
                     player.sendSystemMessage(Component.translatable("item.atamanikita.warp_stone.failwarp"));
                     player.getCooldowns().addCooldown(stack.getItem(), 10);
