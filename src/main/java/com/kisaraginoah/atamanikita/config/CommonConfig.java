@@ -77,7 +77,7 @@ public class CommonConfig {
                 .comment("シフトからの生成率（％）")
                 .defineInRange("spawn_poop_rate", 100.0, 0.0, 100.0);
         ANIMAL_SPAWN_POOP_TICK = BUILDER
-                .comment("動物がうんちする可能性のある時間（秒）")
+                .comment("動物からうんちが出るかロールする時間（秒）")
                 .defineInRange("spawn_poop_rate", 300, 1, Integer.MAX_VALUE);
         ANIMAL_SPAWN_POOP_RATE = BUILDER
                 .comment("動物からの生成率（％）")
