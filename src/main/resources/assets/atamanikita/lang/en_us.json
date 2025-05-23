@@ -46,6 +46,13 @@
   "item.atamanikita.warp_stone.desc3": "ディメンション：%s",
   "item.atamanikita.warp_stone.desc4": "座標：なし",
 
-  "item.atamanikita.remote_activator": "リモートアクセス"
+  "item.atamanikita.remote_activator": "リモートアクセス",
+  "item.atamanikita.remote_activator.fail1": "ターゲット座標が設定されていません",
+  "item.atamanikita.remote_activator.pos": "座標を設定しました：",
+  "item.atamanikita.remote_activator.nomainhanduse": "このアイテムはメインハンドでのみ使用できます",
+  "item.atamanikita.remote_activator.desc1": "指定したブロックを遠隔で右クリックできるアイテム",
+  "item.atamanikita.remote_activator.desc2": "オフハンドにアイテムを持つとそのアイテムを使用し右クリックできる",
+  "item.atamanikita.remote_activator.desc3": "指定されている座標：%s",
+  "item.atamanikita.remote_activator.desc4": "座標が指定されていません"
 
 }
