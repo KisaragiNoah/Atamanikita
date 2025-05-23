@@ -2,7 +2,6 @@ package com.kisaraginoah.atamanikita.event;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,12 +20,11 @@ public class AnimalPoopEvent {
             return;
         }
         int current = animalCooldown.getOrDefault(animal, 0) + 1;
-        if (current >= CommonConfig.ANIMAL_SPAWN_POOP_TICK.get() * 20) {
+        if (current >= CommonConfig.ANIMAL_SPAWN_POOP_TIME.get() * 20) {
             animalCooldown.put(animal, 0);
 
             if (animal.level().random.nextDouble() < CommonConfig.ANIMAL_SPAWN_POOP_RATE.get() / 100) {
-                BlockPos pos = animal.blockPosition();
-                animal.level().addFreshEntity(new ItemEntity(animal.level(), pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.POOP)));
+                animal.level().addFreshEntity(new ItemEntity(animal.level(), animal.getX(), animal.getY(), animal.getZ(), new ItemStack(ModItems.POOP)));
             }
         }
     }

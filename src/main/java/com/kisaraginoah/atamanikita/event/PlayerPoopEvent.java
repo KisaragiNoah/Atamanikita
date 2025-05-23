@@ -2,7 +2,6 @@ package com.kisaraginoah.atamanikita.event;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,8 +22,7 @@ public class PlayerPoopEvent {
 
         if (player.isCrouching() && player.tickCount % 20 == 0) {
             if (random.nextDouble() < CommonConfig.SHIFT_SPAWN_POOP_RATE.get() / 100) {
-                BlockPos pos = player.blockPosition();
-                ItemEntity poop = new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.POOP));
+                ItemEntity poop = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), new ItemStack(ModItems.POOP));
                 level.addFreshEntity(poop);
             }
         }
