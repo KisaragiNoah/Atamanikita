@@ -37,6 +37,7 @@ public class ModCreativeTabs {
                             output.accept(levelUpPickaxeStack);
                             output.accept(ModItems.WARP_STONE.value());
                             output.accept(ModItems.REMOTE_ACTIVATOR.value());
+                            output.accept(ModItems.POOP.value());
                         }).withSearchBar().build()
         );
     }

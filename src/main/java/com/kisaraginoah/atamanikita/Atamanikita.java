@@ -2,6 +2,8 @@ package com.kisaraginoah.atamanikita;
 
 import com.kisaraginoah.atamanikita.config.ClientConfig;
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import com.kisaraginoah.atamanikita.event.AnimalPoopEvent;
+import com.kisaraginoah.atamanikita.event.PlayerPoopEvent;
 import com.kisaraginoah.atamanikita.init.ModDataComponents;
 import com.kisaraginoah.atamanikita.event.BlockBreakDropEvent;
 import com.kisaraginoah.atamanikita.event.MusicDiscDropEvent;
@@ -37,6 +39,12 @@ public class Atamanikita {
         }
         if (CommonConfig.UNIVERSAL_TOOL_DROP.get()) {
             NeoForge.EVENT_BUS.register(BlockBreakDropEvent.class);
+        }
+        if (CommonConfig.SHIFT_SPAWN_POOP.get()) {
+            NeoForge.EVENT_BUS.register(PlayerPoopEvent.class);
+        }
+        if (CommonConfig.ANIMAL_SPAWN_POOP.get()) {
+            NeoForge.EVENT_BUS.register(AnimalPoopEvent.class);
         }
     }
 }

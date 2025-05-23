@@ -19,6 +19,11 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Double> REVENGE_ORB_RADIUS;
     public static final ModConfigSpec.ConfigValue<Integer> WARP_STONE_USE_TIME;
     public static final ModConfigSpec.ConfigValue<Integer> WARP_STONE_COOLDOWN;
+    public static final ModConfigSpec.ConfigValue<Boolean> SHIFT_SPAWN_POOP;
+    public static final ModConfigSpec.ConfigValue<Boolean> ANIMAL_SPAWN_POOP;
+    public static final ModConfigSpec.ConfigValue<Double> SHIFT_SPAWN_POOP_RATE;
+    public static final ModConfigSpec.ConfigValue<Integer> ANIMAL_SPAWN_POOP_TICK;
+    public static final ModConfigSpec.ConfigValue<Double> ANIMAL_SPAWN_POOP_RATE;
 
     static {
         BUILDER.push("common");
@@ -62,6 +67,21 @@ public class CommonConfig {
         WARP_STONE_COOLDOWN = BUILDER
                 .comment("ワープストーンのクールダウン")
                 .defineInRange("warp_stone_cooldown", 100, 0, Integer.MAX_VALUE);
+        SHIFT_SPAWN_POOP = BUILDER
+                .comment("シフトをしたときにうんちを生成")
+                .define("spawn_poop", false);
+        ANIMAL_SPAWN_POOP = BUILDER
+                .comment("動物からうんちを生成")
+                .define("animal_spawn_poop", false);
+        SHIFT_SPAWN_POOP_RATE = BUILDER
+                .comment("シフトからの生成率（％）")
+                .defineInRange("spawn_poop_rate", 100.0, 0.0, 100.0);
+        ANIMAL_SPAWN_POOP_TICK = BUILDER
+                .comment("動物がうんちする可能性のある時間（秒）")
+                .defineInRange("spawn_poop_rate", 300, 1, Integer.MAX_VALUE);
+        ANIMAL_SPAWN_POOP_RATE = BUILDER
+                .comment("動物からの生成率（％）")
+                .defineInRange("spawn_poop_rate", 100.0, 0.0, 100.0);
         BUILDER.pop();
     }
 
