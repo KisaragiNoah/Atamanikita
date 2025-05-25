@@ -20,7 +20,7 @@ public class PlayerPoopEvent {
         Level level = player.level();
         RandomSource random = level.random;
 
-        if (player.isCrouching() && player.tickCount % 20 == 0) {
+        if (player.isCrouching() && player.tickCount % 200 == 0) {
             if (random.nextDouble() < CommonConfig.SHIFT_SPAWN_POOP_RATE.get() / 100) {
                 ItemEntity poop = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), new ItemStack(ModItems.POOP));
                 level.addFreshEntity(poop);
