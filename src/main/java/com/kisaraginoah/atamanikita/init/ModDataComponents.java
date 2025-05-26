@@ -32,7 +32,7 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ResourceKey<Level>>> WARP_DIMENSION = register("warp_dimension",
             resourceKeyBuilder -> resourceKeyBuilder.persistent(ResourceKey.codec(Registries.DIMENSION)));
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> INTERACTION_POS = register("interaction_pos",
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> INTERACTION_BLOCK_POS = register("interaction_block_pos",
             blockPosBuilder -> blockPosBuilder.persistent(BlockPos.CODEC));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<StateWithPos>> STATE_WITH_POS = register("state_with_pos",
