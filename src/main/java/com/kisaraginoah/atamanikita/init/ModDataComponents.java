@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.init;
 
 import com.kisaraginoah.atamanikita.Atamanikita;
+import com.kisaraginoah.atamanikita.util.StateWithPos;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
@@ -33,6 +34,9 @@ public class ModDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<BlockPos>> INTERACTION_POS = register("interaction_pos",
             blockPosBuilder -> blockPosBuilder.persistent(BlockPos.CODEC));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<StateWithPos>> STATE_WITH_POS = register("state_with_pos",
+            stateWithPosBuilder -> stateWithPosBuilder.persistent(StateWithPos.CODEC));
 
     private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
         return REGISTER.register(name, () -> builderUnaryOperator.apply(DataComponentType.builder()).build());

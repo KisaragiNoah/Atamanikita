@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.item.tool;
 
 import com.kisaraginoah.atamanikita.init.ModDataComponents;
+import com.kisaraginoah.atamanikita.util.StateWithPos;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -41,9 +42,19 @@ public class RemoteActivator extends Item {
                 return InteractionResultHolder.pass(offhandItem);
             }
 
-            BlockPos pos = mainHandItem.get(ModDataComponents.INTERACTION_POS);
+            StateWithPos stateWithPos = mainHandItem.get(ModDataComponents.STATE_WITH_POS);
+
+            BlockPos pos;
+            BlockState state;
+            if (stateWithPos != null) {
+                pos = stateWithPos.pos();
+                state = stateWithPos.state();
+            } else {
+                player.sendSystemMessage(Component.translatable("item.atamanikita.fail"));
+                return  InteractionResultHolder.pass(mainHandItem);
+            }
+
             if (pos != null) {
-                BlockState state = level.getBlockState(pos);
                 BlockHitResult hit = new BlockHitResult(
                         Vec3.atCenterOf(pos),
                         player.getDirection(),
@@ -73,8 +84,9 @@ public class RemoteActivator extends Item {
         }
         if (player.isShiftKeyDown() && context.getHand() != InteractionHand.OFF_HAND) {
             BlockPos pos = context.getClickedPos();
+            BlockState state = context.getLevel().getBlockState(pos);
             ItemStack stack = context.getItemInHand();
-            stack.set(ModDataComponents.INTERACTION_POS, pos);
+            stack.set(ModDataComponents.STATE_WITH_POS, new StateWithPos(pos, state));
 
             player.displayClientMessage(
                     Component.translatable("item.atamanikita.remote_activator.pos", pos.toShortString()),
@@ -89,13 +101,20 @@ public class RemoteActivator extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        BlockPos pos = stack.get(ModDataComponents.INTERACTION_POS);
+        StateWithPos stateWithPos = stack.get(ModDataComponents.STATE_WITH_POS);
+        BlockPos pos = null;
+        BlockState state = null;
+        if (stateWithPos != null) {
+            pos = stateWithPos.pos();
+            state = stateWithPos.state();
+        }
         tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc1").withStyle(ChatFormatting.GREEN));
         tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc2").withStyle(ChatFormatting.GREEN));
-        if (pos != null) {
-            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc3", pos.toShortString()).withStyle(ChatFormatting.GREEN));
+        if (pos != null && state != null) {
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc3", pos.toShortString()).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc4", state.getBlock().getName()).withStyle(ChatFormatting.BLUE));
         } else {
-            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc4").withStyle(ChatFormatting.GREEN));
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc5").withStyle(ChatFormatting.BLUE));
         }
     }
 }
