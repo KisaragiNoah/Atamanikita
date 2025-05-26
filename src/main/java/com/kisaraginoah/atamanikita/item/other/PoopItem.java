@@ -35,6 +35,7 @@ public class PoopItem extends Item {
                 if (level instanceof ServerLevel serverLevel) {
                     if (bonemealableBlock.isBonemealSuccess(level, level.random, pos, state)) {
                         bonemealableBlock.performBonemeal(serverLevel, level.random, pos, state);
+                        bonemealableBlock.performBonemeal(serverLevel, level.random, pos, state);
                     }
                 }
                 context.getItemInHand().shrink(1);
