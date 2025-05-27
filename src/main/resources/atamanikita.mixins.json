@@ -1,12 +1,13 @@
 {
   "required": true,
-  "package":"com.kisaraginoah.atamanikita",
+  "package": "com.kisaraginoah.atamanikita.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-
+    "ItemStackMixin",
+    "MenuMixin",
+    "ServerGamePacketListenerMixin"
   ],
   "client": [
-
   ],
   "injectors": {
     "defaultRequire": 1

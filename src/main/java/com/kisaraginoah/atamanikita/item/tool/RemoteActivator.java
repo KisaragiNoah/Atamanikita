@@ -66,8 +66,10 @@ public class RemoteActivator extends Item {
                     state.useWithoutItem(level, player, hit);
                 } else {
                     offhandItem.useOn(new UseOnContext(level, player, InteractionHand.MAIN_HAND, offhandItem, hit));
+                    state = level.getBlockState(pos);
+                    mainHandItem.set(ModDataComponents.STATE_WITH_POS, new StateWithPos(pos, state));
                 }
-                player.getCooldowns().addCooldown(this, 20);
+                player.getCooldowns().addCooldown(this, 10);
                 return InteractionResultHolder.success(mainHandItem);
             } else {
                 player.displayClientMessage(Component.translatable("item.atamanikita.remote_activator.fail1"), true);
