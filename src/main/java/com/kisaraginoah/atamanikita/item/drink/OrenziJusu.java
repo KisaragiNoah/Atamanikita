@@ -43,7 +43,7 @@ public class OrenziJusu extends JusuBase {
             int count = Math.min(CommonConfig.ORENZI_JUSU_EFFECT_VALUE.get(), effects.size()); // 効果の数を超えないように
 
             int duration = CommonConfig.ORENZI_JUSU_EFFECT_DURATION.get();
-            int amplifier = CommonConfig.ORENZI_JUSU_EFFECT_AMPLIER.get();
+            int amplifier = CommonConfig.ORENZI_JUSU_EFFECT_AMPLIFIER.get();
 
             for (int i = 0; i < count; i++) {
                 Holder<MobEffect> effect = effects.get(i);
@@ -56,6 +56,6 @@ public class OrenziJusu extends JusuBase {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc1", CommonConfig.ORENZI_JUSU_EFFECT_VALUE.get().floatValue()).withStyle(ChatFormatting.YELLOW));
-        tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc2", CommonConfig.ORENZI_JUSU_EFFECT_DURATION.get() / 1200, CommonConfig.ORENZI_JUSU_EFFECT_AMPLIER.get()).withStyle(ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.translatable("item.atamanikita.orenzi_jusu.desc2", CommonConfig.ORENZI_JUSU_EFFECT_DURATION.get() / 1200, CommonConfig.ORENZI_JUSU_EFFECT_AMPLIFIER.get()).withStyle(ChatFormatting.YELLOW));
     }
 }

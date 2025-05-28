@@ -16,7 +16,7 @@ public class AnimalPoopEvent {
 
     @SubscribeEvent
     public static void onLivingTick(EntityTickEvent.Post event) {
-        if (!(event.getEntity() instanceof Animal animal) || event.getEntity().level().isClientSide()) {
+        if (!(event.getEntity() instanceof Animal animal) || event.getEntity().level().isClientSide() || event.getEntity().level().getGameTime() % 20 != 0) {
             return;
         }
         int current = animalCooldown.getOrDefault(animal, 0) + 1;

@@ -10,7 +10,10 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Integer> RINGO_JUSU_REMOVE_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_DURATION;
-    public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_AMPLIER;
+    public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_AMPLIFIER;
+    public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_VALUE;
+    public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_DURATION;
+    public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_AMPLIFIER;
     public static final ModConfigSpec.ConfigValue<Boolean> MUSIC_DISC_DROP;
     public static final ModConfigSpec.ConfigValue<Double> MUSIC_DISC_DROP_CHANGE;
     public static final ModConfigSpec.ConfigValue<Boolean> UNIVERSAL_TOOL_DROP;
@@ -39,9 +42,18 @@ public class CommonConfig {
         ORENZI_JUSU_EFFECT_DURATION = BUILDER
                 .comment("オレンジジュースを飲んだ際につくエフェクトの効果時間")
                 .define("orenzi_jusu_effect_duration", 1200);
-        ORENZI_JUSU_EFFECT_AMPLIER = BUILDER
+        ORENZI_JUSU_EFFECT_AMPLIFIER = BUILDER
                 .comment("オレンジジュースを飲んだ際につくエフェクトの効果の強さ")
                 .defineInRange("orenzi_jusu_effect_amplier", 0, 0, 255);
+        ORANGE_JUICE_EFFECT_VALUE = BUILDER
+                .comment("オレンジジュースを飲んだ際につくエフェクトの数")
+                .define("orange_juice_effect_value", 1);
+        ORANGE_JUICE_EFFECT_DURATION = BUILDER
+                .comment("オレンジジュースを飲んだ際につくエフェクトの効果時間")
+                .define("orange_juice_effect_duration", 1200);
+        ORANGE_JUICE_EFFECT_AMPLIFIER = BUILDER
+                .comment("オレンジジュースを飲んだ際につくエフェクトの効果の強さ")
+                .defineInRange("orange_juice_effect_amplier", 0, 0, 255);
         MUSIC_DISC_DROP = BUILDER
                 .comment("追加されたレコードがドロップするかどうか")
                 .define("music_disc_drop", false);
