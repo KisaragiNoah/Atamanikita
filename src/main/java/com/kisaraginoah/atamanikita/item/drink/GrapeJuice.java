@@ -33,6 +33,7 @@ public class GrapeJuice extends JuiceBaseItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.grape_juice.tooltip1", CommonConfig.GRAPE_JUICE_DURATION_EXTENDS.get().floatValue() / 1200).withStyle(ChatFormatting.DARK_PURPLE));
+        int duration = CommonConfig.GRAPE_JUICE_DURATION_EXTENDS.get() / 20;
+        tooltipComponents.add(Component.translatable("item.atamanikita.grape_juice.tooltip1", duration).withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

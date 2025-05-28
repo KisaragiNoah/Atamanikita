@@ -10,14 +10,14 @@
   "item.atamanikita.asuretikku_music_disc.desc": "アスレチック - Nintendo",
 
   "item.atamanikita.grape_juice": "ぶどうジュース",
-  "item.atamanikita.grape_juice.tooltip1": "飲むとポーションの効果時間が%1$.1f分増える",
+  "item.atamanikita.grape_juice.tooltip1": "飲むとポーションの効果時間が%1$d秒増える",
 
   "item.atamanikita.apple_juice": "りんごジュース",
   "item.atamanikita.apple_juice.tooltip1": "飲むと悪いポーション効果をランダムで%1$dつ削除する",
 
   "item.atamanikita.orange_juice": "オレンジジュース",
   "item.atamanikita.orange_juice.tooltip1": "飲むと良いポーション効果をランダムで%1$dつ獲得する",
-  "item.atamanikita.orange_juice.tooltip2": "効果時間：%1$.1f分 効果レベル：%2$d",
+  "item.atamanikita.orange_juice.tooltip2": "効果時間：%1$d秒 効果レベル：%2$d",
 
   "item.atamanikita.megalovania_music_disc": "Megalovaniaのレコード",
   "item.atamanikita.megalovania_music_disc.desc": "Megalovania - Toby Fox",

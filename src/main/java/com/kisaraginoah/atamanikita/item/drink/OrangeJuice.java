@@ -59,7 +59,7 @@ public class OrangeJuice extends JuiceBaseItem {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         int count = CommonConfig.ORANGE_JUICE_EFFECT_VALUE.get();
-        int duration = CommonConfig.ORANGE_JUICE_EFFECT_DURATION.get();
+        int duration = CommonConfig.ORANGE_JUICE_EFFECT_DURATION.get() / 20;
         int amplifier = CommonConfig.ORANGE_JUICE_EFFECT_AMPLIFIER.get();
         tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip1", count).withStyle(ChatFormatting.YELLOW));
         tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip2", duration, amplifier).withStyle(ChatFormatting.YELLOW));
