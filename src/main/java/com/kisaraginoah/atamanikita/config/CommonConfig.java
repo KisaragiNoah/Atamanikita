@@ -4,8 +4,6 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class CommonConfig {
 
-    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
-
     public static final ModConfigSpec.ConfigValue<Integer> GRAPE_JUICE_DURATION_EXTENDS;
     public static final ModConfigSpec.ConfigValue<Integer> APPLE_JUICE_REMOVE_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_VALUE;
@@ -24,6 +22,8 @@ public class CommonConfig {
     public static final ModConfigSpec.ConfigValue<Double> SHIFT_SPAWN_POOP_RATE;
     public static final ModConfigSpec.ConfigValue<Integer> ANIMAL_SPAWN_POOP_TIME;
     public static final ModConfigSpec.ConfigValue<Double> ANIMAL_SPAWN_POOP_RATE;
+    private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
+    public static final ModConfigSpec SPEC = BUILDER.build();
 
     static {
         BUILDER.push("common");
@@ -85,6 +85,4 @@ public class CommonConfig {
                 .defineInRange("animal_spawn_poop_rate", 20.0, 0.0, 100.0);
         BUILDER.pop();
     }
-
-    public static final ModConfigSpec SPEC = BUILDER.build();
 }

@@ -1,9 +1,9 @@
 package com.kisaraginoah.atamanikita.init;
 
 import com.kisaraginoah.atamanikita.Atamanikita;
+import com.kisaraginoah.atamanikita.item.drink.AppleJuice;
 import com.kisaraginoah.atamanikita.item.drink.GrapeJuice;
 import com.kisaraginoah.atamanikita.item.drink.OrangeJuice;
-import com.kisaraginoah.atamanikita.item.drink.AppleJuice;
 import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
 import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;

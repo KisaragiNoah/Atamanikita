@@ -71,6 +71,14 @@ public class UniversalTool extends Item {
                         .build());
     }
 
+    private static boolean playerHasShieldUseIntent(UseOnContext context) {
+        Player player = context.getPlayer();
+        return player != null &&
+                context.getHand() == InteractionHand.MAIN_HAND &&
+                player.getOffhandItem().is(Items.SHIELD) &&
+                !player.isSecondaryUseActive();
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc1").withStyle(ChatFormatting.LIGHT_PURPLE));
@@ -90,7 +98,6 @@ public class UniversalTool extends Item {
     public boolean isEnchantable(ItemStack stack) {
         return false;
     }
-
 
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
@@ -248,14 +255,6 @@ public class UniversalTool extends Item {
                     }
                     return Optional.ofNullable(waxOff);
                 });
-    }
-
-    private static boolean playerHasShieldUseIntent(UseOnContext context) {
-        Player player = context.getPlayer();
-        return player != null &&
-                context.getHand() == InteractionHand.MAIN_HAND &&
-                player.getOffhandItem().is(Items.SHIELD) &&
-                !player.isSecondaryUseActive();
     }
 
     @Override
