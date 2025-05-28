@@ -12,6 +12,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import java.util.WeakHashMap;
 
 public class AnimalPoopEvent {
+
     private static final WeakHashMap<LivingEntity, Integer> animalCooldown = new WeakHashMap<>();
 
     @SubscribeEvent

@@ -2,28 +2,33 @@ package com.kisaraginoah.atamanikita.event;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
 import com.kisaraginoah.atamanikita.init.ModItems;
-import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
+import java.util.WeakHashMap;
+
 public class PlayerPoopEvent {
+
+    private static final WeakHashMap<LivingEntity, Integer> shiftCooldown = new WeakHashMap<>();
+
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (event.getEntity().level().isClientSide) {
+        Player player = event.getEntity();
+
+        if (event.getEntity().level().isClientSide && player.tickCount % 20 != 0 && !player.isCrouching()) {
             return;
         }
-        Player player = event.getEntity();
-        Level level = player.level();
-        RandomSource random = level.random;
 
-        if (player.isCrouching() && player.tickCount % 200 == 0) {
-            if (random.nextDouble() < CommonConfig.SHIFT_SPAWN_POOP_RATE.get() / 100) {
-                ItemEntity poop = new ItemEntity(level, player.getX(), player.getY(), player.getZ(), new ItemStack(ModItems.POOP));
-                level.addFreshEntity(poop);
+        int current = shiftCooldown.getOrDefault(player, 0) + 1;
+        if (current >= CommonConfig.SHIFT_SPAWN_POOP_TIME.get()) {
+            shiftCooldown.put(player, 0);
+
+            if (player.level().random.nextDouble() < CommonConfig.SHIFT_SPAWN_POOP_RATE.get() / 100) {
+                player.level().addFreshEntity(new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), new ItemStack(ModItems.POOP)));
             }
         }
     }
