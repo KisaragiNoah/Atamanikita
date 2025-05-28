@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "atamanikita:item/budou_jusu"
+    "layer0": "atamanikita:item/orange_juice"
   }
 }

@@ -38,7 +38,7 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<StateWithPos>> STATE_WITH_POS = register("state_with_pos",
             stateWithPosBuilder -> stateWithPosBuilder.persistent(StateWithPos.CODEC));
 
-    private static <T>DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
+    private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderUnaryOperator) {
         return REGISTER.register(name, () -> builderUnaryOperator.apply(DataComponentType.builder()).build());
     }
 }

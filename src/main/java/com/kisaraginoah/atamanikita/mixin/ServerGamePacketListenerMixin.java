@@ -16,7 +16,7 @@ public class ServerGamePacketListenerMixin {
     @Inject(method = "handleUseItem", at = @At("HEAD"), cancellable = true)
     private void handleUseItem(ServerboundUseItemPacket packet, CallbackInfo ci) {
         InteractionHand hand = packet.getHand();
-        ServerPlayer player = ((ServerGamePacketListenerImpl)(Object)this).player;
+        ServerPlayer player = ((ServerGamePacketListenerImpl) (Object) this).player;
 
         if (hand == InteractionHand.OFF_HAND) {
             ItemStack main = player.getMainHandItem();

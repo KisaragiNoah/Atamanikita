@@ -18,10 +18,14 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RingoJusu extends JusuBase {
+public class AppleJuice extends JuiceBaseItem {
+
+    public AppleJuice() {
+        super(new Properties().stacksTo(16));
+    }
 
     @Override
-    protected void processEffects(LivingEntity livingEntity) {
+    protected void execute(LivingEntity livingEntity) {
         List<MobEffectInstance> effects = new ArrayList<>(
                 livingEntity.getActiveEffects().stream()
                         .filter(mobEffectInstance -> mobEffectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
@@ -29,7 +33,7 @@ public class RingoJusu extends JusuBase {
         );
 
         if (!livingEntity.level().isClientSide && !effects.isEmpty()) {
-            int maxRemoveCount = CommonConfig.RINGO_JUSU_REMOVE_EFFECT_VALUE.get();
+            int maxRemoveCount = CommonConfig.APPLE_JUICE_REMOVE_EFFECT_VALUE.get();
             int removeCount = Math.min(maxRemoveCount, effects.size());
 
             Random javaRandom = new Random(livingEntity.level().random.nextLong());
@@ -43,6 +47,7 @@ public class RingoJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.ringo_jusu.desc1", CommonConfig.RINGO_JUSU_REMOVE_EFFECT_VALUE.get()).withStyle(ChatFormatting.RED));
+        int count = CommonConfig.APPLE_JUICE_REMOVE_EFFECT_VALUE.get();
+        tooltipComponents.add(Component.translatable("item.atamanikita.apple_juice.tooltip1", count).withStyle(ChatFormatting.RED));
     }
 }

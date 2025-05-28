@@ -44,11 +44,11 @@ public class LevelUpPickaxe extends Item {
 
     @Override
     public float getDestroySpeed(ItemStack stack, BlockState state) {
-        if (!state.is(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe")))&& !stack.isCorrectToolForDrops(state)) {
+        if (!state.is(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/pickaxe"))) && !stack.isCorrectToolForDrops(state)) {
             return 0F;
         }
         long level = Optional.ofNullable(stack.get(ModDataComponents.MINING_LEVEL)).orElse(1L);
-        return MINING_SPEED * (float)Math.pow(2, level - 1);
+        return MINING_SPEED * (float) Math.pow(2, level - 1);
     }
 
     @Override
@@ -61,8 +61,8 @@ public class LevelUpPickaxe extends Item {
         long mined = Optional.ofNullable(stack.get(ModDataComponents.MINING)).orElse(0L) + 1;
         stack.set(ModDataComponents.MINING, mined);
         long mining_level = calculateLevel(mined, stack);
-        int progress = (int)(mined - MathUtils.customPow(10, mining_level - 1));
-        int maxProgress = (int)(MathUtils.customPow(10, mining_level) - MathUtils.customPow(10, mining_level - 1));
+        int progress = (int) (mined - MathUtils.customPow(10, mining_level - 1));
+        int maxProgress = (int) (MathUtils.customPow(10, mining_level) - MathUtils.customPow(10, mining_level - 1));
         stack.setDamageValue(maxProgress - progress);
         return super.mineBlock(stack, level, state, pos, miningEntity);
     }
@@ -89,9 +89,9 @@ public class LevelUpPickaxe extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         long mined = Optional.ofNullable(stack.get(ModDataComponents.MINING)).orElse(0L);
         long mining_level = calculateLevel(mined, stack);
-        int progress = (int)(mined - MathUtils.customPow(10, mining_level - 1));
-        int maxProgress = (int)(MathUtils.customPow(10, mining_level) - MathUtils.customPow(10, mining_level - 1));
-        int percent = (int)((progress / (float)maxProgress) * 100);
+        int progress = (int) (mined - MathUtils.customPow(10, mining_level - 1));
+        int maxProgress = (int) (MathUtils.customPow(10, mining_level) - MathUtils.customPow(10, mining_level - 1));
+        int percent = (int) ((progress / (float) maxProgress) * 100);
 
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.desc1").withStyle(ChatFormatting.GOLD));
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.level", mining_level).withStyle(ChatFormatting.GOLD));
@@ -99,7 +99,7 @@ public class LevelUpPickaxe extends Item {
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.percent", percent).withStyle(ChatFormatting.GRAY));
 
         int barLength = 20;
-        int filled = (int)((progress / (float)maxProgress) * barLength);
+        int filled = (int) ((progress / (float) maxProgress) * barLength);
         StringBuilder bar = new StringBuilder();
         for (int i = 0; i < barLength; i++) {
             bar.append(i < filled ? "■" : "□");
@@ -111,7 +111,7 @@ public class LevelUpPickaxe extends Item {
     @Override
     public int getMaxDamage(ItemStack stack) {
         long level = Optional.ofNullable(stack.get(ModDataComponents.MINING_LEVEL)).orElse(1L);
-        return (int)(MathUtils.customPow(10, level) - MathUtils.customPow(10, level - 1));
+        return (int) (MathUtils.customPow(10, level) - MathUtils.customPow(10, level - 1));
     }
 
     @Override

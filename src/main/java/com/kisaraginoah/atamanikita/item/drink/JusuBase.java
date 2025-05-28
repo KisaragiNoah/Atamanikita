@@ -38,9 +38,9 @@ public abstract class JusuBase extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        Player player = livingEntity instanceof Player ? (Player)livingEntity : null;
+        Player player = livingEntity instanceof Player ? (Player) livingEntity : null;
         if (player instanceof ServerPlayer) {
-            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)player, stack);
+            CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
         }
 
         // 共通部分：効果の処理

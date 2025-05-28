@@ -6,11 +6,8 @@ public class CommonConfig {
 
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.ConfigValue<Integer> BUDOU_JUSU_DURATION_EXTENDS;
-    public static final ModConfigSpec.ConfigValue<Integer> RINGO_JUSU_REMOVE_EFFECT_VALUE;
-    public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_VALUE;
-    public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_DURATION;
-    public static final ModConfigSpec.ConfigValue<Integer> ORENZI_JUSU_EFFECT_AMPLIFIER;
+    public static final ModConfigSpec.ConfigValue<Integer> GRAPE_JUICE_DURATION_EXTENDS;
+    public static final ModConfigSpec.ConfigValue<Integer> APPLE_JUICE_REMOVE_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_VALUE;
     public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_DURATION;
     public static final ModConfigSpec.ConfigValue<Integer> ORANGE_JUICE_EFFECT_AMPLIFIER;
@@ -30,30 +27,21 @@ public class CommonConfig {
 
     static {
         BUILDER.push("common");
-        BUDOU_JUSU_DURATION_EXTENDS = BUILDER
-                .comment("ぶどうジュースを飲んだ際に効果延長をする時間")
-                .define("budou_jusu_duration_extends", 1200);
-        RINGO_JUSU_REMOVE_EFFECT_VALUE = BUILDER
+        GRAPE_JUICE_DURATION_EXTENDS = BUILDER
+                .comment("ぶどうジュースを飲んだ際に効果延長をする時間（Tick)")
+                .defineInRange("grape_juice_duration_extends", 1200, 1, Integer.MAX_VALUE);
+        APPLE_JUICE_REMOVE_EFFECT_VALUE = BUILDER
                 .comment("りんごジュースを飲んだ際に削除するエフェクトの数")
-                .define("ringo_jusu_remove_effect", 1);
-        ORENZI_JUSU_EFFECT_VALUE = BUILDER
-                .comment("オレンジジュースを飲んだ際につくエフェクトの数")
-                .define("orenzi_jusu_effect_value", 1);
-        ORENZI_JUSU_EFFECT_DURATION = BUILDER
-                .comment("オレンジジュースを飲んだ際につくエフェクトの効果時間")
-                .define("orenzi_jusu_effect_duration", 1200);
-        ORENZI_JUSU_EFFECT_AMPLIFIER = BUILDER
-                .comment("オレンジジュースを飲んだ際につくエフェクトの効果の強さ")
-                .defineInRange("orenzi_jusu_effect_amplier", 0, 0, 255);
+                .defineInRange("apple_juice_remove_effect", 1, 1, Integer.MAX_VALUE);
         ORANGE_JUICE_EFFECT_VALUE = BUILDER
                 .comment("オレンジジュースを飲んだ際につくエフェクトの数")
-                .define("orange_juice_effect_value", 1);
+                .defineInRange("orange_juice_effect_value", 1, 1, Integer.MAX_VALUE);
         ORANGE_JUICE_EFFECT_DURATION = BUILDER
-                .comment("オレンジジュースを飲んだ際につくエフェクトの効果時間")
-                .define("orange_juice_effect_duration", 1200);
+                .comment("オレンジジュースを飲んだ際につくエフェクトの効果時間（Tick）")
+                .defineInRange("orange_juice_effect_duration", 1200, 0, Integer.MAX_VALUE);
         ORANGE_JUICE_EFFECT_AMPLIFIER = BUILDER
                 .comment("オレンジジュースを飲んだ際につくエフェクトの効果の強さ")
-                .defineInRange("orange_juice_effect_amplier", 0, 0, 255);
+                .defineInRange("orange_juice_effect_amplifier", 0, 0, 255);
         MUSIC_DISC_DROP = BUILDER
                 .comment("追加されたレコードがドロップするかどうか")
                 .define("music_disc_drop", false);
@@ -71,13 +59,13 @@ public class CommonConfig {
                 .defineInRange("revenge_orb_multiplier", 2.0F, 0.01F, Float.MAX_VALUE);
         REVENGE_ORB_RADIUS = BUILDER
                 .comment("リベンジオーブの効果範囲")
-                .comment("注意！！！この値を大きくしすぎると不具合が発生する場合があります！！！")
+                .comment("この値を大きくしすぎると不具合が発生する場合があります！！！")
                 .defineInRange("revenge_orb_radius", 5.0, 0.1, Double.MAX_VALUE);
         WARP_STONE_USE_TIME = BUILDER
-                .comment("ワープストーン発動までの時間")
+                .comment("ワープストーン発動までの時間（Tick）")
                 .defineInRange("warp_stone_use_time", 100, 0, Integer.MAX_VALUE);
         WARP_STONE_COOLDOWN = BUILDER
-                .comment("ワープストーンのクールダウン")
+                .comment("ワープストーンのクールダウン（Tick）")
                 .defineInRange("warp_stone_cooldown", 100, 0, Integer.MAX_VALUE);
         SHIFT_SPAWN_POOP = BUILDER
                 .comment("シフトをしたときにうんちを生成")
@@ -89,8 +77,9 @@ public class CommonConfig {
                 .comment("動物からうんちを生成")
                 .define("animal_spawn_poop", false);
         ANIMAL_SPAWN_POOP_TIME = BUILDER
-                .comment("動物からうんちが出るかロールする時間（秒）")
-                .defineInRange("animal_spawn_poop_time", 300, 1, Integer.MAX_VALUE);
+                .comment("動物からうんちが出るかロールする時間（Tick）")
+                .comment("値を小さくしすぎるとパフォーマンスに重大な問題が発生する場合があります！！！")
+                .defineInRange("animal_spawn_poop_time", 6000, 1, Integer.MAX_VALUE);
         ANIMAL_SPAWN_POOP_RATE = BUILDER
                 .comment("動物からの生成率（％）")
                 .defineInRange("animal_spawn_poop_rate", 20.0, 0.0, 100.0);

@@ -51,7 +51,7 @@ public class RemoteActivator extends Item {
                 state = stateWithPos.state();
             } else {
                 player.sendSystemMessage(Component.translatable("item.atamanikita.fail"));
-                return  InteractionResultHolder.pass(mainHandItem);
+                return InteractionResultHolder.pass(mainHandItem);
             }
 
             if (pos != null) {

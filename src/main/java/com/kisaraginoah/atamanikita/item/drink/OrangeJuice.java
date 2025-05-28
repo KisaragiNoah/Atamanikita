@@ -1,6 +1,8 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import net.minecraft.ChatFormatting;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -12,15 +14,19 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class OrangeJuice extends JuiceBaseItem {
 
-    public OrangeJuice(Properties properties) {
-        super(properties.stacksTo(16));
+
+    public OrangeJuice() {
+        super(new Properties().stacksTo(16));
     }
 
     @Override
@@ -52,7 +58,10 @@ public class OrangeJuice extends JuiceBaseItem {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip1"));
-        tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip2"));
+        int count = CommonConfig.ORANGE_JUICE_EFFECT_VALUE.get();
+        int duration = CommonConfig.ORANGE_JUICE_EFFECT_DURATION.get();
+        int amplifier = CommonConfig.ORANGE_JUICE_EFFECT_AMPLIFIER.get();
+        tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip1", count).withStyle(ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.translatable("item.atamanikita.orange_juice.tooltip2", duration, amplifier).withStyle(ChatFormatting.YELLOW));
     }
 }

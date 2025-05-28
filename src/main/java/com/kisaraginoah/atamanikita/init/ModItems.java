@@ -1,9 +1,9 @@
 package com.kisaraginoah.atamanikita.init;
 
 import com.kisaraginoah.atamanikita.Atamanikita;
-import com.kisaraginoah.atamanikita.item.drink.BudouJusu;
-import com.kisaraginoah.atamanikita.item.drink.OrenziJusu;
-import com.kisaraginoah.atamanikita.item.drink.RingoJusu;
+import com.kisaraginoah.atamanikita.item.drink.GrapeJuice;
+import com.kisaraginoah.atamanikita.item.drink.OrangeJuice;
+import com.kisaraginoah.atamanikita.item.drink.AppleJuice;
 import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
 import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
@@ -25,9 +25,9 @@ public class ModItems {
     public static final Holder<Item> ASURETIKKU_MUSIC_DISC = REGISTER.register("asuretikku_music_disc", AsuretikkuMusicDisc::new);
     public static final Holder<Item> MEGALOVANIA_MUSIC_DISC = REGISTER.register("megalovania_music_disc", MegalovaniaMusicDisc::new);
 
-    public static final Holder<Item> BUDOU_JUSU = REGISTER.register("budou_jusu", BudouJusu::new);
-    public static final Holder<Item> RINGO_JUSU = REGISTER.register("ringo_jusu", RingoJusu::new);
-    public static final Holder<Item> ORENZI_JUSU = REGISTER.register("orenzi_jusu", OrenziJusu::new);
+    public static final Holder<Item> GRAPE_JUICE = REGISTER.register("grape_juice", GrapeJuice::new);
+    public static final Holder<Item> APPLE_JUICE = REGISTER.register("apple_juice", AppleJuice::new);
+    public static final Holder<Item> ORANGE_JUICE = REGISTER.register("orange_juice", OrangeJuice::new);
 
     public static final Holder<Item> UNIVERSAL_TOOL = REGISTER.register("universal_tool", UniversalTool::new);
     public static final Holder<Item> LEVEL_UP_PICKAXE = REGISTER.register("level_up_pickaxe", LevelUpPickaxe::new);

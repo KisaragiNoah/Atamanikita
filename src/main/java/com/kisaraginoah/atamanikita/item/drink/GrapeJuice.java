@@ -14,14 +14,18 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class BudouJusu extends JusuBase {
+public class GrapeJuice extends JuiceBaseItem {
+
+    public GrapeJuice() {
+        super(new Properties().stacksTo(16));
+    }
 
     @Override
-    protected void processEffects(LivingEntity livingEntity) {
+    protected void execute(LivingEntity livingEntity) {
         if (!livingEntity.level().isClientSide) {
             for (MobEffectInstance effectInstance : livingEntity.getActiveEffects()) {
                 if (effectInstance.getEffect().value().isBeneficial()) {
-                    livingEntity.addEffect(new MobEffectInstance(effectInstance.getEffect(), effectInstance.getDuration() + CommonConfig.BUDOU_JUSU_DURATION_EXTENDS.get(), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
+                    livingEntity.addEffect(new MobEffectInstance(effectInstance.getEffect(), effectInstance.getDuration() + CommonConfig.GRAPE_JUICE_DURATION_EXTENDS.get(), effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.isVisible(), effectInstance.showIcon()));
                 }
             }
         }
@@ -29,6 +33,6 @@ public class BudouJusu extends JusuBase {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.budou_jusu.desc1", CommonConfig.BUDOU_JUSU_DURATION_EXTENDS.get().floatValue() / 1200).withStyle(ChatFormatting.DARK_PURPLE));
+        tooltipComponents.add(Component.translatable("item.atamanikita.grape_juice.tooltip1", CommonConfig.GRAPE_JUICE_DURATION_EXTENDS.get().floatValue() / 1200).withStyle(ChatFormatting.DARK_PURPLE));
     }
 }

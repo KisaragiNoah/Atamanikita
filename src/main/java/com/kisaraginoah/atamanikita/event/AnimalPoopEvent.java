@@ -19,8 +19,9 @@ public class AnimalPoopEvent {
         if (!(event.getEntity() instanceof Animal animal) || event.getEntity().level().isClientSide() || event.getEntity().level().getGameTime() % 20 != 0) {
             return;
         }
+
         int current = animalCooldown.getOrDefault(animal, 0) + 1;
-        if (current >= CommonConfig.ANIMAL_SPAWN_POOP_TIME.get() * 20) {
+        if (current >= CommonConfig.ANIMAL_SPAWN_POOP_TIME.get()) {
             animalCooldown.put(animal, 0);
 
             if (animal.level().random.nextDouble() < CommonConfig.ANIMAL_SPAWN_POOP_RATE.get() / 100) {

@@ -92,7 +92,6 @@ public class UniversalTool extends Item {
     }
 
 
-
     @Override
     public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entity) {
         if (!level.isClientSide && !state.is(BlockTags.FIRE)) {
