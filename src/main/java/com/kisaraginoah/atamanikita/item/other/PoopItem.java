@@ -20,6 +20,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class PoopItem extends Item {
+
     public PoopItem() {
         super(new Properties());
     }
@@ -29,7 +30,6 @@ public class PoopItem extends Item {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
-
         if (state.getBlock() instanceof BonemealableBlock bonemealableBlock) {
             if (bonemealableBlock.isValidBonemealTarget(level, pos, state)) {
                 if (level instanceof ServerLevel serverLevel) {
@@ -38,7 +38,9 @@ public class PoopItem extends Item {
                         bonemealableBlock.performBonemeal(serverLevel, level.random, pos, state);
                     }
                 }
-                context.getItemInHand().shrink(1);
+                if (context.getPlayer() != null && !context.getPlayer().hasInfiniteMaterials()) {
+                    context.getItemInHand().shrink(1);
+                }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
@@ -47,6 +49,6 @@ public class PoopItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.poop.desc1").withStyle(ChatFormatting.YELLOW));
+        tooltipComponents.add(Component.translatable("item.atamanikita.poop.tooltip1").withStyle(ChatFormatting.YELLOW));
     }
 }

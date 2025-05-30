@@ -12,7 +12,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> REGISTER = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Atamanikita.MOD_ID);
-
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ATAMANIKITA_TABS;
 
     static {

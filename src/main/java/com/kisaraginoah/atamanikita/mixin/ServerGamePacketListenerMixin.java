@@ -17,10 +17,9 @@ public class ServerGamePacketListenerMixin {
     private void handleUseItem(ServerboundUseItemPacket packet, CallbackInfo ci) {
         InteractionHand hand = packet.getHand();
         ServerPlayer player = ((ServerGamePacketListenerImpl) (Object) this).player;
-
         if (hand == InteractionHand.OFF_HAND) {
             ItemStack main = player.getMainHandItem();
-            if (main.getItem() instanceof RemoteActivator) {
+            if (main.getItem() instanceof RemoteActivator && !RemoteActivator.using.get()) {
                 ci.cancel();
             }
         }

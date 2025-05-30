@@ -30,6 +30,7 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class RevengeOrb extends Item {
+
     public RevengeOrb() {
         super(new Properties().stacksTo(1).component(ModDataComponents.REVENGE_DAMAGE, 0.0F));
     }
@@ -75,19 +76,16 @@ public class RevengeOrb extends Item {
                             if (level instanceof ServerLevel serverLevel) {
                                 AABB aabb = entity.getBoundingBox().inflate(0.3);
                                 RandomSource randomSource = serverLevel.getRandom();
-
                                 for (int i = 0; i < 20; i++) {
                                     double x = aabb.minX + (aabb.maxX - aabb.minX) * randomSource.nextDouble();
                                     double y = aabb.minY + (aabb.maxY - aabb.minY) * randomSource.nextDouble();
                                     double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * randomSource.nextDouble();
-
                                     serverLevel.sendParticles(ParticleTypes.FIREWORK, x, y, z, 1, 0, 0.01, 0, 0);
                                 }
                                 for (int i = 0; i < 20; i++) {
                                     double x = aabb.minX + (aabb.maxX - aabb.minX) * randomSource.nextDouble();
                                     double y = aabb.minY + (aabb.maxY - aabb.minY) * randomSource.nextDouble();
                                     double z = aabb.minZ + (aabb.maxZ - aabb.minZ) * randomSource.nextDouble();
-
                                     serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, x, y, z, 1, 0, 0.01, 0, 0);
                                 }
                             }
@@ -106,8 +104,8 @@ public class RevengeOrb extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc1", CommonConfig.REVENGE_ORB_MULTIPLIER.get(), CommonConfig.REVENGE_ORB_RADIUS.get()).withStyle(ChatFormatting.AQUA));
-        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc2").withStyle(ChatFormatting.AQUA));
-        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.desc3", stack.get(ModDataComponents.REVENGE_DAMAGE)).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.tooltip1", CommonConfig.REVENGE_ORB_MULTIPLIER.get(), CommonConfig.REVENGE_ORB_RADIUS.get()).withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.tooltip2").withStyle(ChatFormatting.AQUA));
+        tooltipComponents.add(Component.translatable("item.atamanikita.revenge_orb.tooltip3", stack.get(ModDataComponents.REVENGE_DAMAGE)).withStyle(ChatFormatting.AQUA));
     }
 }

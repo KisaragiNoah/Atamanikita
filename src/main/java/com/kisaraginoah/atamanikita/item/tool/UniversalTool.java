@@ -41,7 +41,6 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class UniversalTool extends Item {
-
     private static final float BASE_DESTROY_MULTIPLIER = 10000.0F;
     private static final int MAX_DURABILITY = 100_000;
     private static final float TOOL_EFFICIENCY = 20.0F;
@@ -59,7 +58,6 @@ public class UniversalTool extends Item {
                 Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/shovel")), TOOL_EFFICIENCY),
                 Tool.Rule.minesAndDrops(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("minecraft", "mineable/hoe")), TOOL_EFFICIENCY)
         ), TOOL_EFFICIENCY, 1);
-
         return new Properties()
                 .stacksTo(1)
                 .durability(MAX_DURABILITY)
@@ -81,9 +79,9 @@ public class UniversalTool extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc1").withStyle(ChatFormatting.LIGHT_PURPLE));
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc2").withStyle(ChatFormatting.LIGHT_PURPLE));
-        tooltip.add(Component.translatable("item.atamanikita.universal_tool.desc3").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.tooltip1").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.tooltip2").withStyle(ChatFormatting.LIGHT_PURPLE));
+        tooltip.add(Component.translatable("item.atamanikita.universal_tool.tooltip3").withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 
     @Override
@@ -104,7 +102,6 @@ public class UniversalTool extends Item {
         if (!level.isClientSide && !state.is(BlockTags.FIRE)) {
             stack.hurtAndBreak(1, entity, EquipmentSlot.MAINHAND);
         }
-
         return state.is(BlockTags.LEAVES)
                 || state.is(Blocks.COBWEB)
                 || state.is(Blocks.SHORT_GRASS)
@@ -122,7 +119,6 @@ public class UniversalTool extends Item {
             BlockPos pos = entity.blockPosition();
             Level level = entity.level();
             boolean isClient = level.isClientSide();
-
             if (shearable.isShearable(player, stack, level, pos)) {
                 List<ItemStack> drops = shearable.onSheared(player, stack, level, pos);
                 if (!isClient) {
@@ -140,30 +136,24 @@ public class UniversalTool extends Item {
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
-
         if (context.getClickedFace() != Direction.DOWN && player.isShiftKeyDown()) {
             return tryFlatten(context);
         }
-
         InteractionResult tillResult = tryTill(context);
         if (tillResult != InteractionResult.PASS) return tillResult;
-
         if (!playerHasShieldUseIntent(context)) {
             return tryAxeActions(context);
         }
-
         return tryTrim(context);
     }
 
     private InteractionResult tryFlatten(UseOnContext context) {
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
-
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState original = level.getBlockState(pos);
         BlockState flattened = original.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
-
         if (flattened != null && level.getBlockState(pos.above()).isAir()) {
             level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
             if (!level.isClientSide) {
@@ -180,10 +170,8 @@ public class UniversalTool extends Item {
     private InteractionResult tryTill(UseOnContext context) {
         Player player = context.getPlayer();
         if (player == null || player.isShiftKeyDown()) return InteractionResult.PASS;
-
         BlockState tilled = context.getLevel().getBlockState(context.getClickedPos())
                 .getToolModifiedState(context, ItemAbilities.HOE_TILL, false);
-
         if (tilled != null) {
             Level level = context.getLevel();
             level.playSound(player, context.getClickedPos(), SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -200,25 +188,20 @@ public class UniversalTool extends Item {
     private InteractionResult tryAxeActions(UseOnContext context) {
         Player player = context.getPlayer();
         if (player == null) return InteractionResult.PASS;
-
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState original = level.getBlockState(pos);
-
         Optional<BlockState> newState = evaluateNewBlockState(level, pos, player, original, context);
         if (newState.isPresent()) {
             BlockState newBlock = newState.get();
             level.setBlock(pos, newBlock, 11);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, newBlock));
             context.getItemInHand().hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
-
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, context.getItemInHand());
             }
-
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-
         return InteractionResult.PASS;
     }
 
@@ -226,14 +209,12 @@ public class UniversalTool extends Item {
         BlockState trimmed = context.getLevel()
                 .getBlockState(context.getClickedPos())
                 .getToolModifiedState(context, ItemAbilities.SHEARS_TRIM, false);
-
         if (trimmed != null && context.getPlayer() instanceof ServerPlayer serverPlayer) {
             context.getLevel().setBlock(context.getClickedPos(), trimmed, 11);
             context.getItemInHand().hurtAndBreak(1, serverPlayer, LivingEntity.getSlotForHand(context.getHand()));
             CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, context.getClickedPos(), context.getItemInHand());
             return InteractionResult.sidedSuccess(context.getLevel().isClientSide);
         }
-
         return InteractionResult.PASS;
     }
 

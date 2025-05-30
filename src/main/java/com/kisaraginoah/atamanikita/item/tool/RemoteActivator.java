@@ -26,6 +26,8 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class RemoteActivator extends Item {
+    public static ThreadLocal<Boolean> using = ThreadLocal.withInitial(() -> false);
+
     public RemoteActivator() {
         super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
     }
@@ -34,16 +36,13 @@ public class RemoteActivator extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack mainHandItem = player.getMainHandItem();
         ItemStack offhandItem = player.getOffhandItem();
-
         if (!level.isClientSide && !player.isShiftKeyDown()) {
-
             if (usedHand != InteractionHand.MAIN_HAND) {
                 player.sendSystemMessage(Component.translatable("item.atamanikita.remote_activator.nomainhanduse"));
                 return InteractionResultHolder.pass(offhandItem);
             }
-
+            using.set(true);
             StateWithPos stateWithPos = mainHandItem.get(ModDataComponents.STATE_WITH_POS);
-
             BlockPos pos;
             BlockState state;
             if (stateWithPos != null) {
@@ -53,7 +52,6 @@ public class RemoteActivator extends Item {
                 player.sendSystemMessage(Component.translatable("item.atamanikita.fail"));
                 return InteractionResultHolder.pass(mainHandItem);
             }
-
             if (pos != null) {
                 BlockHitResult hit = new BlockHitResult(
                         Vec3.atCenterOf(pos),
@@ -61,7 +59,6 @@ public class RemoteActivator extends Item {
                         pos,
                         false
                 );
-
                 if (offhandItem.isEmpty()) {
                     state.useWithoutItem(level, player, hit);
                 } else {
@@ -70,6 +67,7 @@ public class RemoteActivator extends Item {
                     mainHandItem.remove(ModDataComponents.STATE_WITH_POS);
                     mainHandItem.set(ModDataComponents.STATE_WITH_POS, new StateWithPos(pos, state));
                 }
+                using.set(false);
                 player.getCooldowns().addCooldown(this, 10);
                 return InteractionResultHolder.success(mainHandItem);
             } else {
@@ -82,7 +80,7 @@ public class RemoteActivator extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Player player = context.getPlayer();
-        if (player == null || !context.getLevel().isClientSide || !player.isShiftKeyDown()) {
+        if (player == null || context.getLevel().isClientSide || !player.isShiftKeyDown()) {
             return InteractionResult.PASS;
         }
         if (context.getHand() != InteractionHand.OFF_HAND) {
@@ -91,7 +89,6 @@ public class RemoteActivator extends Item {
             ItemStack stack = context.getItemInHand();
             stack.remove(ModDataComponents.STATE_WITH_POS);
             stack.set(ModDataComponents.STATE_WITH_POS, new StateWithPos(pos, state));
-
             player.displayClientMessage(
                     Component.translatable("item.atamanikita.remote_activator.pos", pos.toShortString()),
                     true
@@ -112,13 +109,13 @@ public class RemoteActivator extends Item {
             pos = stateWithPos.pos();
             state = stateWithPos.state();
         }
-        tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc1").withStyle(ChatFormatting.GREEN));
-        tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc2").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.tooltip1").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.tooltip2").withStyle(ChatFormatting.GREEN));
         if (pos != null && state != null) {
-            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc3", pos.toShortString()).withStyle(ChatFormatting.BLUE));
-            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc4", state.getBlock().getName()).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.tooltip3", pos.toShortString()).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.tooltip4", state.getBlock().getName()).withStyle(ChatFormatting.BLUE));
         } else {
-            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.desc5").withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.remote_activator.tooltip5").withStyle(ChatFormatting.BLUE));
         }
     }
 }

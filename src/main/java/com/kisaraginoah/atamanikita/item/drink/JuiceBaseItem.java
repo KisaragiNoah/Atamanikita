@@ -44,14 +44,11 @@ public abstract class JuiceBaseItem extends Item {
         if (player instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.CONSUME_ITEM.trigger(serverPlayer, stack);
         }
-
         execute(livingEntity);
-
         if (player != null) {
             player.awardStat(Stats.ITEM_USED.get(this));
             stack.consume(1, player);
         }
-
         ItemStack result = stack;
         if (player == null || !player.hasInfiniteMaterials()) {
             if (stack.isEmpty()) {
@@ -62,7 +59,6 @@ public abstract class JuiceBaseItem extends Item {
                 livingEntity.level().addFreshEntity(new ItemEntity(livingEntity.level(), livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), new ItemStack(Items.GLASS_BOTTLE)));
             }
         }
-
         livingEntity.gameEvent(GameEvent.DRINK);
         return result;
     }

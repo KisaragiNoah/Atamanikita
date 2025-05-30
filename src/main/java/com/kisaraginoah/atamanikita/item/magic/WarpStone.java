@@ -26,6 +26,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class WarpStone extends Item {
+
     public WarpStone() {
         super(new Properties().stacksTo(1).rarity(Rarity.RARE));
     }
@@ -82,16 +83,16 @@ public class WarpStone extends Item {
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         Vec3 vec3 = stack.get(ModDataComponents.WARP_POSITION);
         ResourceKey<Level> targetDimension = stack.get(ModDataComponents.WARP_DIMENSION);
-        tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc1").withStyle(ChatFormatting.BLUE));
+        tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.tooltip1").withStyle(ChatFormatting.BLUE));
         if (vec3 == null || targetDimension == null) {
-            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc4").withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.tooltip4").withStyle(ChatFormatting.BLUE));
         } else {
             String dimKey = "dimension." + targetDimension.location().getNamespace() + "." + targetDimension.location().getPath();
             Component dimensionName = Language.getInstance().has(dimKey)
                     ? Component.translatable(dimKey)
                     : Component.literal(targetDimension.location().toString());
-            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc2", new BigDecimal(vec3.x).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.y).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.z).setScale(1, RoundingMode.HALF_UP)).withStyle(ChatFormatting.BLUE));
-            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.desc3", dimensionName).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.tooltip2", new BigDecimal(vec3.x).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.y).setScale(1, RoundingMode.HALF_UP), new BigDecimal(vec3.z).setScale(1, RoundingMode.HALF_UP)).withStyle(ChatFormatting.BLUE));
+            tooltipComponents.add(Component.translatable("item.atamanikita.warp_stone.tooltip3", dimensionName).withStyle(ChatFormatting.BLUE));
         }
     }
 }

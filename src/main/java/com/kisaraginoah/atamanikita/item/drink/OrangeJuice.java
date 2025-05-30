@@ -24,7 +24,6 @@ import java.util.Random;
 @MethodsReturnNonnullByDefault
 public class OrangeJuice extends JuiceBaseItem {
 
-
     public OrangeJuice() {
         super(new Properties().stacksTo(16));
     }
@@ -33,22 +32,18 @@ public class OrangeJuice extends JuiceBaseItem {
     protected void execute(LivingEntity livingEntity) {
         Registry<MobEffect> mobEffectRegistry = livingEntity.level().registryAccess()
                 .registryOrThrow(Registries.MOB_EFFECT);
-
         List<Holder<MobEffect>> holders = new ArrayList<>(
                 mobEffectRegistry.holders()
                         .filter(holder -> holder.value().isBeneficial())
                         .filter(holder -> !holder.value().isInstantenous())
                         .toList()
         );
-
         if (!livingEntity.level().isClientSide && !holders.isEmpty()) {
             RandomSource random = livingEntity.level().random;
             Collections.shuffle(holders, new Random(random.nextLong()));
-
             int count = Math.min(CommonConfig.ORANGE_JUICE_EFFECT_VALUE.get(), holders.size());
             int duration = CommonConfig.ORANGE_JUICE_EFFECT_DURATION.get();
             int amplifier = CommonConfig.ORANGE_JUICE_EFFECT_AMPLIFIER.get();
-
             for (int i = 0; i < count; i++) {
                 Holder<MobEffect> effectHolder = holders.get(i);
                 livingEntity.addEffect(new MobEffectInstance(effectHolder, duration, amplifier));

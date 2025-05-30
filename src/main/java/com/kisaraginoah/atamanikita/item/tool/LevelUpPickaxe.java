@@ -33,7 +33,6 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class LevelUpPickaxe extends Item {
-
     private static final float MINING_SPEED = 5.0F;
 
     public LevelUpPickaxe() {
@@ -92,12 +91,10 @@ public class LevelUpPickaxe extends Item {
         int progress = (int) (mined - MathUtils.customPow(10, mining_level - 1));
         int maxProgress = (int) (MathUtils.customPow(10, mining_level) - MathUtils.customPow(10, mining_level - 1));
         int percent = (int) ((progress / (float) maxProgress) * 100);
-
-        tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.desc1").withStyle(ChatFormatting.GOLD));
+        tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.tooltip1").withStyle(ChatFormatting.GOLD));
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.level", mining_level).withStyle(ChatFormatting.GOLD));
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.remaining", maxProgress - progress).withStyle(ChatFormatting.GOLD));
         tooltipComponents.add(Component.translatable("item.atamanikita.level_up_pickaxe.percent", percent).withStyle(ChatFormatting.GRAY));
-
         int barLength = 20;
         int filled = (int) ((progress / (float) maxProgress) * barLength);
         StringBuilder bar = new StringBuilder();
@@ -124,12 +121,10 @@ public class LevelUpPickaxe extends Item {
         if (!player.level().isClientSide) {
             ItemStack stack = player.getItemInHand(usedHand);
             Registry<Enchantment> registry = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT);
-
             registry.getHolder(Enchantments.SILK_TOUCH).ifPresent(silkTouchHolder -> {
                 int silkTouchLevel = EnchantmentHelper.getTagEnchantmentLevel(silkTouchHolder, stack);
                 registry.getHolder(Enchantments.FORTUNE).ifPresent(fortuneHolder -> {
                     int fortuneLevel = EnchantmentHelper.getTagEnchantmentLevel(fortuneHolder, stack);
-
                     if (silkTouchLevel > 0) {
                         stack.set(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
                         stack.enchant(fortuneHolder, 3);

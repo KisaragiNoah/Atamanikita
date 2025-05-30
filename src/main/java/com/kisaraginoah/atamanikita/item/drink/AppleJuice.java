@@ -31,14 +31,11 @@ public class AppleJuice extends JuiceBaseItem {
                         .filter(mobEffectInstance -> mobEffectInstance.getEffect().value().getCategory() == MobEffectCategory.HARMFUL)
                         .toList()
         );
-
         if (!livingEntity.level().isClientSide && !effects.isEmpty()) {
             int maxRemoveCount = CommonConfig.APPLE_JUICE_REMOVE_EFFECT_VALUE.get();
             int removeCount = Math.min(maxRemoveCount, effects.size());
-
             Random javaRandom = new Random(livingEntity.level().random.nextLong());
             Collections.shuffle(effects, javaRandom);
-
             for (int i = 0; i < removeCount; i++) {
                 livingEntity.removeEffect(effects.get(i).getEffect());
             }
