@@ -2,6 +2,7 @@ package com.kisaraginoah.atamanikita.item.tool;
 
 import com.kisaraginoah.atamanikita.init.ModDataComponents;
 import com.kisaraginoah.atamanikita.util.MathUtils;
+import com.kisaraginoah.atamanikita.util.UnCheckedBug;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,7 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@UnCheckedBug
 public class LevelUpPickaxe extends Item {
     private static final float MINING_SPEED = 5.0F;
 

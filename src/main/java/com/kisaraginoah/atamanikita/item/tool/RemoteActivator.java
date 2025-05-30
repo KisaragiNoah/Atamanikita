@@ -2,6 +2,7 @@ package com.kisaraginoah.atamanikita.item.tool;
 
 import com.kisaraginoah.atamanikita.init.ModDataComponents;
 import com.kisaraginoah.atamanikita.util.StateWithPos;
+import com.kisaraginoah.atamanikita.util.UnCheckedBug;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
@@ -25,6 +26,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@UnCheckedBug
 public class RemoteActivator extends Item {
     public static ThreadLocal<Boolean> using = ThreadLocal.withInitial(() -> false);
 

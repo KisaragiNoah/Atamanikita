@@ -1,6 +1,7 @@
 package com.kisaraginoah.atamanikita.item.drink;
 
 import com.kisaraginoah.atamanikita.config.CommonConfig;
+import com.kisaraginoah.atamanikita.util.UnCheckedBug;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@UnCheckedBug
 public class GrapeJuice extends JuiceBaseItem {
 
     public GrapeJuice() {

@@ -1,5 +1,6 @@
 package com.kisaraginoah.atamanikita.item.tool;
 
+import com.kisaraginoah.atamanikita.util.UnCheckedBug;
 import net.minecraft.ChatFormatting;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -40,6 +41,7 @@ import java.util.Optional;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@UnCheckedBug
 public class UniversalTool extends Item {
     private static final float BASE_DESTROY_MULTIPLIER = 10000.0F;
     private static final int MAX_DURABILITY = 100_000;
