@@ -61,6 +61,8 @@
   "item.atamanikita.remote_activator.tooltip5": "座標が指定されていません",
 
   "item.atamanikita.poop": "うんち",
-  "item.atamanikita.poop.tooltip1": "うんちです（自己紹介）骨粉の2倍効果がある"
+  "item.atamanikita.poop.tooltip1": "うんちです（自己紹介）骨粉の2倍効果がある",
+
+  "item.atamanikita.magic_wand": "マジックワンド"
 
 }

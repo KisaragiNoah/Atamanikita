@@ -4,6 +4,7 @@ import com.kisaraginoah.atamanikita.Atamanikita;
 import com.kisaraginoah.atamanikita.item.drink.AppleJuice;
 import com.kisaraginoah.atamanikita.item.drink.GrapeJuice;
 import com.kisaraginoah.atamanikita.item.drink.OrangeJuice;
+import com.kisaraginoah.atamanikita.item.magic.MagicWand;
 import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
 import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
@@ -35,5 +36,8 @@ public class ModItems {
     public static final Holder<Item> REVENGE_ORB = REGISTER.register("revenge_orb", RevengeOrb::new);
     public static final Holder<Item> WARP_STONE = REGISTER.register("warp_stone", WarpStone::new);
     public static final Holder<Item> REMOTE_ACTIVATOR = REGISTER.register("remote_activator", RemoteActivator::new);
+
     public static final Holder<Item> POOP = REGISTER.register("poop", PoopItem::new);
+
+    public static final Holder<Item> MAGIC_WAND = REGISTER.register("magic_wand", MagicWand::new);
 }

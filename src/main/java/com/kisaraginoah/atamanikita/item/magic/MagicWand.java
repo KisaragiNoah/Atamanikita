@@ -1,0 +1,77 @@
+package com.kisaraginoah.atamanikita.item.magic;
+
+import com.kisaraginoah.atamanikita.util.UnCheckedBug;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.*;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
+@UnCheckedBug
+public class MagicWand extends Item {
+
+    public MagicWand() {
+        super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+    }
+
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if (!level.isClientSide()) {
+            final double range = 30.0;
+            Vec3 start = player.getEyePosition(1.0F);
+            Vec3 look = player.getLookAngle();
+            Vec3 end = start.add(look.scale(range));
+            ClipContext context = new ClipContext(start, end,
+                    ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
+            BlockHitResult blockHit = level.clip(context);
+            EntityHitResult entityHit = getEntityHitResult(level, player, start, end);
+            if (entityHit != null) {
+                Entity target = entityHit.getEntity();
+                target.hurt(level.damageSources().magic(), 10.0F);
+                if (target instanceof LivingEntity living) {
+                    living.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 1));
+                }
+                ((ServerLevel) level).sendParticles(ParticleTypes.ENCHANT,
+                        target.getX(), target.getY() + 1, target.getZ(), 20, 0.5, 0.5, 0.5, 0.01);
+            } else if (blockHit.getType() == Type.BLOCK) {
+                BlockPos pos = blockHit.getBlockPos().relative(blockHit.getDirection());
+                level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+            }
+            level.playSound(null, player.blockPosition(),
+                    SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1.0F, 1.0F);
+            player.swing(hand);
+        }
+        return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
+    }
+
+    private EntityHitResult getEntityHitResult(Level level, Player player, Vec3 start, Vec3 end) {
+        AABB aabb = player.getBoundingBox().expandTowards(end.subtract(start)).inflate(1.0D);
+        return ProjectileUtil.getEntityHitResult(
+                level, player, start, end, aabb,
+                entity -> !entity.isSpectator() && entity.isPickable() && entity != player
+        );
+    }
+}

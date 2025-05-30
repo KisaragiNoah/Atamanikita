@@ -37,6 +37,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.WARP_STONE.value());
                             output.accept(ModItems.REMOTE_ACTIVATOR.value());
                             output.accept(ModItems.POOP.value());
+                            output.accept(ModItems.MAGIC_WAND.value());
                         }).withSearchBar().build()
         );
     }
