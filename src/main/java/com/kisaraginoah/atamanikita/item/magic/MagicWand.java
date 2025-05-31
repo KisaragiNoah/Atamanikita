@@ -44,8 +44,7 @@ public class MagicWand extends Item {
             Vec3 start = player.getEyePosition(1.0F);
             Vec3 look = player.getLookAngle();
             Vec3 end = start.add(look.scale(range));
-            ClipContext context = new ClipContext(start, end,
-                    ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
+            ClipContext context = new ClipContext(start, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
             BlockHitResult blockHit = level.clip(context);
             EntityHitResult entityHit = getEntityHitResult(level, player, start, end);
             Vec3 hitPos = null;
@@ -82,11 +81,10 @@ public class MagicWand extends Item {
     }
 
     private void spawnBeamParticles(Level level, Vec3 start, Vec3 end) {
-        final double stepSize = 0.5; // パーティクルの間隔
+        final double stepSize = 0.5;
         Vec3 delta = end.subtract(start);
         double length = delta.length();
         Vec3 direction = delta.normalize();
-
         int steps = (int)(length / stepSize);
         for (int i = 0; i <= steps; i++) {
             Vec3 pos = start.add(direction.scale(i * stepSize));
