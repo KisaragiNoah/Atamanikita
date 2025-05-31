@@ -38,6 +38,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.REMOTE_ACTIVATOR.value());
                             output.accept(ModItems.POOP.value());
                             output.accept(ModItems.MAGIC_WAND.value());
+                            output.accept(ModItems.MAGICAL_WAND.value());
                         }).withSearchBar().build()
         );
     }

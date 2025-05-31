@@ -5,6 +5,7 @@ import com.kisaraginoah.atamanikita.item.drink.AppleJuice;
 import com.kisaraginoah.atamanikita.item.drink.GrapeJuice;
 import com.kisaraginoah.atamanikita.item.drink.OrangeJuice;
 import com.kisaraginoah.atamanikita.item.magic.MagicWand;
+import com.kisaraginoah.atamanikita.item.magic.MagicalWand;
 import com.kisaraginoah.atamanikita.item.magic.RevengeOrb;
 import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
@@ -40,4 +41,5 @@ public class ModItems {
     public static final Holder<Item> POOP = REGISTER.register("poop", PoopItem::new);
 
     public static final Holder<Item> MAGIC_WAND = REGISTER.register("magic_wand", MagicWand::new);
+    public static final Holder<Item> MAGICAL_WAND = REGISTER.register("magical_wand", MagicalWand::new);
 }

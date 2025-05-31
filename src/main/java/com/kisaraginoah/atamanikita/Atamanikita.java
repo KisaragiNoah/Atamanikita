@@ -25,6 +25,7 @@ public class Atamanikita {
         ModCreativeTabs.REGISTER.register(modEventBus);
         ModBlocks.REGISTER.register(modEventBus);
         ModDataComponents.REGISTER.register(modEventBus);
+        ModEntities.REGISTER.register(modEventBus);
         modContainer.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC);
         modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC);
     }

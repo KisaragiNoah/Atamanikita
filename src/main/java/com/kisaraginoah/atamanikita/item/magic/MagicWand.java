@@ -48,7 +48,9 @@ public class MagicWand extends Item {
                     ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
             BlockHitResult blockHit = level.clip(context);
             EntityHitResult entityHit = getEntityHitResult(level, player, start, end);
+            Vec3 hitPos = null;
             if (entityHit != null) {
+                hitPos = entityHit.getLocation();
                 Entity target = entityHit.getEntity();
                 target.hurt(level.damageSources().magic(), 10.0F);
                 if (target instanceof LivingEntity living) {
@@ -57,8 +59,12 @@ public class MagicWand extends Item {
                 ((ServerLevel) level).sendParticles(ParticleTypes.ENCHANT,
                         target.getX(), target.getY() + 1, target.getZ(), 20, 0.5, 0.5, 0.5, 0.01);
             } else if (blockHit.getType() == Type.BLOCK) {
+                hitPos = Vec3.atCenterOf(blockHit.getBlockPos());
                 BlockPos pos = blockHit.getBlockPos().relative(blockHit.getDirection());
                 level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+            }
+            if (hitPos != null) {
+                spawnBeamParticles(level, start, hitPos);
             }
             level.playSound(null, player.blockPosition(),
                     SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -73,5 +79,21 @@ public class MagicWand extends Item {
                 level, player, start, end, aabb,
                 entity -> !entity.isSpectator() && entity.isPickable() && entity != player
         );
+    }
+
+    private void spawnBeamParticles(Level level, Vec3 start, Vec3 end) {
+        final double stepSize = 0.5; // パーティクルの間隔
+        Vec3 delta = end.subtract(start);
+        double length = delta.length();
+        Vec3 direction = delta.normalize();
+
+        int steps = (int)(length / stepSize);
+        for (int i = 0; i <= steps; i++) {
+            Vec3 pos = start.add(direction.scale(i * stepSize));
+            if (level instanceof ServerLevel serverLevel) {
+                serverLevel.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y, pos.z,
+                        1, 0, 0, 0, 0);
+            }
+        }
     }
 }
