@@ -13,6 +13,7 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 @EventBusSubscriber(modid = Atamanikita.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class WandClientOverlay {
+    private static float animatedRatio = 0.0F;
 
     @SubscribeEvent
     public static void onRenderWandOverlay(RenderGuiEvent.Post event) {
@@ -25,10 +26,14 @@ public class WandClientOverlay {
                 int useDuration = stack.getUseDuration(player);
                 int remaining = player.getUseItemRemainingTicks();
                 int charged = useDuration - remaining;
-                float ratio = Math.min(charged / 20.0F, 20.0F);
-                int barWidth = (int)(ratio * 5);
+                float targetRatio = Math.min(charged / 20.0F, 20.0F);
+                animatedRatio += (targetRatio - animatedRatio) * 0.2F;
+                int barWidth = (int)(animatedRatio * 5);
                 graphics.fill(10, 10, 110, 20, 0x80000000);
-                graphics.fill(10, 10, 10 + barWidth, 20, 0xFFFF00FF);
+                int time = (int)(System.currentTimeMillis() / 50L);
+                int pulse = (int)(128 + Math.sin(time * 0.3) * 127);
+                int color = (pulse << 24) | 0xFF00FF;
+                graphics.fill(10, 10, 10 + barWidth, 20, color);
             }
         }
     }
