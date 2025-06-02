@@ -13,7 +13,7 @@ public class ModEntities {
 
     public static final DeferredHolder<EntityType<?>, EntityType<MagicalProjectile>> MAGICAL_PROJECTILE = REGISTER.register("magical_projectile", () -> EntityType.Builder.<MagicalProjectile>of(MagicalProjectile::new, MobCategory.MISC)
             .sized(0.25F, 0.25F)
-            .clientTrackingRange(4)
+            .clientTrackingRange(100)
             .updateInterval(10)
             .build("magical_projectile"));
 }

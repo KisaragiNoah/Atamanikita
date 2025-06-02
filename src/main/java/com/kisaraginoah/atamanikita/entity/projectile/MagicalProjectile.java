@@ -26,6 +26,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class MagicalProjectile extends Projectile {
     private int life;
+    private float damage;
 
     public MagicalProjectile(EntityType<? extends MagicalProjectile> entityType, Level level) {
         super(entityType, level);
@@ -76,13 +77,13 @@ public class MagicalProjectile extends Projectile {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        if (this.getOwner() instanceof LivingEntity) {
-            Entity entity = result.getEntity();
-            DamageSource damageSource = this.damageSources().magic();
-            if (entity.hurt(damageSource, 8.0F) && this.level() instanceof ServerLevel serverLevel) {
-                EnchantmentHelper.doPostAttackEffects(serverLevel, entity, damageSource);
-            }
+        Entity entity = result.getEntity();
+        DamageSource damageSource = this.damageSources().magic();
+        if (entity.hurt(damageSource, damage) && this.level() instanceof ServerLevel serverLevel) {
+            serverLevel.sendParticles(ParticleTypes.CRIT, entity.getX(), entity.getY(), entity.getZ(), 20, 0, 0, 0 , 0.1F);
+            EnchantmentHelper.doPostAttackEffects(serverLevel, entity, damageSource);
         }
+        this.discard();
     }
 
     @Override
@@ -118,5 +119,13 @@ public class MagicalProjectile extends Projectile {
         double d1 = packet.getYa();
         double d2 = packet.getZa();
         this.setDeltaMovement(d0, d1, d2);
+    }
+
+    public void setDamage(float damage) {
+        this.damage = damage;
+    }
+
+    public float getDamage() {
+        return damage;
     }
 }
