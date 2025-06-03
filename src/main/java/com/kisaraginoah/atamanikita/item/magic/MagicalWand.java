@@ -49,7 +49,7 @@ public class MagicalWand extends Item {
         MagicalProjectile magicalProjectile = new MagicalProjectile(level, player);
         int chargingTime = this.getUseDuration(stack, player) - timeCharged;
         float chargeRatio = chargingTime / 20.0F;
-        float velocity = 1.0F + Math.min(chargeRatio, 20.0F);
+        float velocity = Math.min(chargeRatio, 20.0F);
         float damage = 10.0F + Math.min(chargeRatio, 20.0F);
         magicalProjectile.setDamage(damage);
         Vec3 vec3 = player.getLookAngle().normalize();
