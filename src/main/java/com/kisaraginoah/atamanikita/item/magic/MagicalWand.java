@@ -52,7 +52,7 @@ public class MagicalWand extends Item {
         float velocity = Math.min(chargeRatio, 20.0F);
         float damage = 10.0F + Math.min(chargeRatio, 20.0F);
         magicalProjectile.setDamage(damage);
-        Vec3 vec3 = player.getLookAngle().normalize();
+        Vec3 vec3 = player.getLookAngle();
         magicalProjectile.shoot(vec3.x, vec3.y, vec3.z, velocity, 0.0F);
         level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS);
         level.addFreshEntity(magicalProjectile);
