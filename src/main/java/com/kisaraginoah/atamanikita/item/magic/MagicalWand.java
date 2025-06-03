@@ -46,10 +46,10 @@ public class MagicalWand extends Item {
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
         int chargingTime = this.getUseDuration(stack, livingEntity) - timeCharged;
-        float damage = Math.min(chargingTime / 20.0F * 2, 40F);
+        float damage = Math.min(chargingTime / 10.0F * 2, 40.0F);
         damage = Math.max(damage, 0.5F);
         float minVelocity = 0.1F;
-        float maxVelocity = 3.0F;
+        float maxVelocity = 5.0F;
         float minDamage = 0.5F;
         float maxDamage = 40.0F;
         damage = Math.min(Math.max(damage, minDamage), maxDamage);

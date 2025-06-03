@@ -48,12 +48,38 @@ public class MagicalProjectile extends Projectile {
     }
 
     @Override
+    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
+        super.lerpTo(x, y, z, yRot, xRot, steps);
+    }
+
+    @Override
+    public void lerpMotion(double x, double y, double z) {
+        super.lerpMotion(x, y, z);
+        this.life = 0;
+    }
+
+    @Override
+    protected void lerpPositionAndRotationStep(int steps, double targetX, double targetY, double targetZ, double targetYRot, double targetXRot) {
+        super.lerpPositionAndRotationStep(steps, targetX, targetY, targetZ, targetYRot, targetXRot);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (!this.level().isClientSide) {
             tickDespawn();
         }
-        this.level().addAlwaysVisibleParticle(ParticleTypes.END_ROD, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        Vec3 prev = this.position().subtract(this.getDeltaMovement());
+        Vec3 curr = this.position();
+        double dist = prev.distanceTo(curr);
+        int steps = (int)(dist * 10);
+        for (int i = 0; i < steps; i++) {
+            double t = (double) i / steps;
+            double x = Mth.lerp(t, prev.x, curr.x);
+            double y = Mth.lerp(t, prev.y, curr.y);
+            double z = Mth.lerp(t, prev.z, curr.z);
+            this.level().addAlwaysVisibleParticle(ParticleTypes.END_ROD, true, x, y, z, 0, 0, 0);
+        }
         Vec3 vec3 = this.getDeltaMovement();
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hitresult.getType() != HitResult.Type.MISS && !net.neoforged.neoforge.event.EventHooks.onProjectileImpact(this, hitresult)) {
@@ -108,10 +134,7 @@ public class MagicalProjectile extends Projectile {
 
     @Override
     public void recreateFromPacket(ClientboundAddEntityPacket packet) {
+        this.setDeltaMovement(this.getDeltaMovement().x, this.getDeltaMovement().y, this.getDeltaMovement().z);
         super.recreateFromPacket(packet);
-        double d0 = packet.getXa();
-        double d1 = packet.getYa();
-        double d2 = packet.getZa();
-        this.setDeltaMovement(d0, d1, d2);
     }
 }

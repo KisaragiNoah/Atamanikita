@@ -26,9 +26,9 @@ public class WandClientOverlay {
                 int useDuration = stack.getUseDuration(player);
                 int remaining = player.getUseItemRemainingTicks();
                 int charged = useDuration - remaining;
-                float targetRatio = Math.min(charged / 20.0F, 20.0F);
+                float targetRatio = Math.min(charged / 10.0F, 40.0F);
                 animatedRatio += (targetRatio - animatedRatio) * 0.2F;
-                int barWidth = (int)(animatedRatio * 5);
+                int barWidth = (int)(animatedRatio * 2.5);
                 graphics.fill(10, 10, 110, 20, 0x80000000);
                 int time = (int)(System.currentTimeMillis() / 50L);
                 int pulse = (int)(128 + Math.sin(time * 0.3) * 127);
