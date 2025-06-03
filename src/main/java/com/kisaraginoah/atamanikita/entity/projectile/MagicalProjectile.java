@@ -5,6 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -18,24 +19,27 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.event.EventHooks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class MagicalProjectile extends Projectile {
-    private int life;
-    private float damage;
+    public float damage;
+    public int life;
 
     public MagicalProjectile(EntityType<? extends MagicalProjectile> entityType, Level level) {
         super(entityType, level);
     }
 
-    public MagicalProjectile(Level level, LivingEntity shooter) {
+    public MagicalProjectile(Level level, LivingEntity living, float damage) {
         this(ModEntities.MAGICAL_PROJECTILE.get(), level);
-        this.setOwner(shooter);
-        this.setPos(shooter.getX(), shooter.getEyeY() - (double) 0.1F, shooter.getZ());
-        this.updateRotation();
+        this.setOwner(living);
+        this.damage = damage;
+        this.setPos(
+                living.getX() - (double)(living.getBbWidth() + 1.0F) * 0.5 * (double) Mth.sin(living.yBodyRot * (float) (Math.PI / 180.0)),
+                living.getEyeY() - 0.1F,
+                living.getZ() + (double)(living.getBbWidth() + 1.0F) * 0.5 * (double)Mth.cos(living.yBodyRot * (float) (Math.PI / 180.0))
+        );
     }
 
     @Override
@@ -47,42 +51,47 @@ public class MagicalProjectile extends Projectile {
     public void tick() {
         super.tick();
         if (!this.level().isClientSide) {
-            this.tickDespawn();
+            tickDespawn();
         }
-        Vec3 vec3 = this.getDeltaMovement().normalize();
-        HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
-        if (hitResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitResult)) {
-            this.hitTargetOrDeflectSelf(hitResult);
+        this.level().addAlwaysVisibleParticle(ParticleTypes.END_ROD, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        Vec3 vec3 = this.getDeltaMovement();
+        HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
+        if (hitresult.getType() != HitResult.Type.MISS && !net.neoforged.neoforge.event.EventHooks.onProjectileImpact(this, hitresult)) {
+            this.hitTargetOrDeflectSelf(hitresult);
         }
         double d0 = this.getX() + vec3.x;
         double d1 = this.getY() + vec3.y;
         double d2 = this.getZ() + vec3.z;
         this.updateRotation();
-        float f = 0.99F;
         if (this.level().getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)) {
             this.discard();
         } else if (this.isInWaterOrBubble()) {
             this.discard();
         } else {
-            this.setDeltaMovement(vec3.scale(f));
+            this.setDeltaMovement(vec3);
             this.applyGravity();
             this.setPos(d0, d1, d2);
-            if (this.level().isClientSide) {
-                this.level().addAlwaysVisibleParticle(ParticleTypes.END_ROD, true, this.getX(), this.getY(), this.getZ(), 0, 0.01, 0);
-            }
+        }
+    }
+
+    protected void tickDespawn() {
+        this.life++;
+        if (this.life >= 1200) {
+            this.discard();
         }
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        Entity entity = result.getEntity();
-        DamageSource damageSource = this.damageSources().magic();
-        if (entity.hurt(damageSource, damage) && this.level() instanceof ServerLevel serverLevel) {
-            serverLevel.sendParticles(ParticleTypes.CRIT, entity.getX(), entity.getY(), entity.getZ(), 20, 0, 0, 0 , 0.1F);
-            EnchantmentHelper.doPostAttackEffects(serverLevel, entity, damageSource);
+        if (this.getOwner() instanceof LivingEntity) {
+            Entity entity = result.getEntity();
+            DamageSource damagesource = this.damageSources().magic();
+            if (entity.hurt(damagesource, damage) && this.level() instanceof ServerLevel serverlevel) {
+                EnchantmentHelper.doPostAttackEffects(serverlevel, entity, damagesource);
+                this.discard();
+            }
         }
-        this.discard();
     }
 
     @Override
@@ -94,20 +103,7 @@ public class MagicalProjectile extends Projectile {
     }
 
     @Override
-    public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-        super.shoot(x, y, z, velocity, inaccuracy);
-        this.life = 0;
-    }
-
-    @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-    }
-
-    protected void tickDespawn() {
-        this.life++;
-        if (this.life >= 100) {
-            this.discard();
-        }
     }
 
     @Override
@@ -117,13 +113,5 @@ public class MagicalProjectile extends Projectile {
         double d1 = packet.getYa();
         double d2 = packet.getZa();
         this.setDeltaMovement(d0, d1, d2);
-    }
-
-    public void setDamage(float damage) {
-        this.damage = damage;
-    }
-
-    public float getDamage() {
-        return damage;
     }
 }
