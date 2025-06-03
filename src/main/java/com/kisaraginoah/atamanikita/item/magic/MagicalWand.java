@@ -48,7 +48,6 @@ public class MagicalWand extends Item {
         if (!(livingEntity instanceof Player player) || level.isClientSide) return;
         MagicalProjectile magicalProjectile = new MagicalProjectile(level, player);
         int chargingTime = this.getUseDuration(stack, player) - timeCharged;
-        System.out.println(chargingTime);
         float chargeRatio = chargingTime / 20.0F;
         float velocity = 1.0F + Math.min(chargeRatio, 20.0F);
         float damage = 10.0F + Math.min(chargeRatio, 20.0F);

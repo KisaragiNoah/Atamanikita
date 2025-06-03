@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -35,10 +34,8 @@ public class MagicalProjectile extends Projectile {
     public MagicalProjectile(Level level, LivingEntity shooter) {
         this(ModEntities.MAGICAL_PROJECTILE.get(), level);
         this.setOwner(shooter);
-        this.setPos(shooter.getX() - (double) (shooter.getBbWidth() + 1.0F) * 0.5 * (double) Mth.sin(shooter.yBodyRot * (float) (Math.PI / 180.0)),
-                shooter.getEyeY() - 0.1F,
-                shooter.getZ() + (double) (shooter.getBbWidth() + 1.0F) * 0.5 * (double) Mth.cos(shooter.yBodyRot * (float) (Math.PI / 180.0))
-        );
+        this.setPos(shooter.getX(), shooter.getEyeY() - (double) 0.1F, shooter.getZ());
+        this.updateRotation();
     }
 
     @Override
@@ -52,7 +49,7 @@ public class MagicalProjectile extends Projectile {
         if (!this.level().isClientSide) {
             this.tickDespawn();
         }
-        Vec3 vec3 = this.getDeltaMovement();
+        Vec3 vec3 = this.getDeltaMovement().normalize();
         HitResult hitResult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hitResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, hitResult)) {
             this.hitTargetOrDeflectSelf(hitResult);
@@ -61,7 +58,6 @@ public class MagicalProjectile extends Projectile {
         double d1 = this.getY() + vec3.y;
         double d2 = this.getZ() + vec3.z;
         this.updateRotation();
-        this.level().addParticle(ParticleTypes.END_ROD, this.getX(), this.getY(), this.getZ(), 0, 0.01, 0);
         float f = 0.99F;
         if (this.level().getBlockStates(this.getBoundingBox()).noneMatch(BlockBehaviour.BlockStateBase::isAir)) {
             this.discard();
@@ -71,6 +67,9 @@ public class MagicalProjectile extends Projectile {
             this.setDeltaMovement(vec3.scale(f));
             this.applyGravity();
             this.setPos(d0, d1, d2);
+            if (this.level().isClientSide) {
+                this.level().addAlwaysVisibleParticle(ParticleTypes.END_ROD, true, this.getX(), this.getY(), this.getZ(), 0, 0.01, 0);
+            }
         }
     }
 
@@ -106,7 +105,6 @@ public class MagicalProjectile extends Projectile {
 
     protected void tickDespawn() {
         this.life++;
-        System.out.println(life);
         if (this.life >= 100) {
             this.discard();
         }
