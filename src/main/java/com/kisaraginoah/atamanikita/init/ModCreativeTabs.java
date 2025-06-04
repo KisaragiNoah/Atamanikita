@@ -39,6 +39,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.POOP.value());
                             output.accept(ModItems.MAGIC_WAND.value());
                             output.accept(ModItems.MAGICAL_WAND.value());
+                            output.accept(ModItems.PARTICLE_SWORD.value());
                         }).withSearchBar().build()
         );
     }

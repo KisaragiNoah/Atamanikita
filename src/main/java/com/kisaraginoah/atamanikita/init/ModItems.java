@@ -15,6 +15,7 @@ import com.kisaraginoah.atamanikita.item.other.PoopItem;
 import com.kisaraginoah.atamanikita.item.tool.LevelUpPickaxe;
 import com.kisaraginoah.atamanikita.item.tool.RemoteActivator;
 import com.kisaraginoah.atamanikita.item.tool.UniversalTool;
+import com.kisaraginoah.atamanikita.item.weapon.ParticleSword;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -42,4 +43,6 @@ public class ModItems {
 
     public static final Holder<Item> MAGIC_WAND = REGISTER.register("magic_wand", MagicWand::new);
     public static final Holder<Item> MAGICAL_WAND = REGISTER.register("magical_wand", MagicalWand::new);
+
+    public static final Holder<Item> PARTICLE_SWORD = REGISTER.register("particle_sword", ParticleSword::new);
 }
