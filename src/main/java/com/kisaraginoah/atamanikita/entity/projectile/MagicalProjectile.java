@@ -47,22 +47,6 @@ public class MagicalProjectile extends Projectile {
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int steps) {
-        super.lerpTo(x, y, z, yRot, xRot, steps);
-    }
-
-    @Override
-    public void lerpMotion(double x, double y, double z) {
-        super.lerpMotion(x, y, z);
-        this.life = 0;
-    }
-
-    @Override
-    protected void lerpPositionAndRotationStep(int steps, double targetX, double targetY, double targetZ, double targetYRot, double targetXRot) {
-        super.lerpPositionAndRotationStep(steps, targetX, targetY, targetZ, targetYRot, targetXRot);
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (!this.level().isClientSide) {
@@ -71,7 +55,7 @@ public class MagicalProjectile extends Projectile {
         Vec3 prev = this.position().subtract(this.getDeltaMovement());
         Vec3 curr = this.position();
         double dist = prev.distanceTo(curr);
-        int steps = (int)(dist * 10);
+        int steps = (int)(dist * 10) + 1;
         for (int i = 0; i < steps; i++) {
             double t = (double) i / steps;
             double x = Mth.lerp(t, prev.x, curr.x);
@@ -101,7 +85,7 @@ public class MagicalProjectile extends Projectile {
 
     protected void tickDespawn() {
         this.life++;
-        if (this.life >= 1200) {
+        if (this.life >= 200) {
             this.discard();
         }
     }

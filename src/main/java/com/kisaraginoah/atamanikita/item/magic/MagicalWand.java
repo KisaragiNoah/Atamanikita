@@ -49,7 +49,7 @@ public class MagicalWand extends Item {
         float damage = Math.min(chargingTime / 10.0F * 2, 40.0F);
         damage = Math.max(damage, 0.5F);
         float minVelocity = 0.1F;
-        float maxVelocity = 5.0F;
+        float maxVelocity = 3.8F;
         float minDamage = 0.5F;
         float maxDamage = 40.0F;
         damage = Math.min(Math.max(damage, minDamage), maxDamage);
@@ -57,6 +57,7 @@ public class MagicalWand extends Item {
         MagicalProjectile magicalProjectile = new MagicalProjectile(level, livingEntity, damage);
         magicalProjectile.setPos(livingEntity.getEyePosition(1.0F));
         Vec3 look = livingEntity.getLookAngle();
+        System.out.println(velocity);
         magicalProjectile.shoot(look.x, look.y, look.z, velocity, 1.0F);
         level.playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1.0F);
         level.addFreshEntity(magicalProjectile);

@@ -1,7 +1,6 @@
 package com.kisaraginoah.atamanikita.item.magic;
 
 import com.kisaraginoah.atamanikita.util.UnCheckedBug;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -15,7 +14,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -37,27 +35,26 @@ public class MagicWand extends Item {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         if (!level.isClientSide()) {
-            final double range = 30.0;
+            final double range = 30;
             Vec3 start = player.getEyePosition(1.0F);
             Vec3 look = player.getLookAngle();
             Vec3 end = start.add(look.scale(range));
             ClipContext context = new ClipContext(start, end, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, player);
             BlockHitResult blockHit = level.clip(context);
             EntityHitResult entityHit = getEntityHitResult(level, player, start, end);
-            Vec3 hitPos = null;
+            Vec3 hitPos;
             if (entityHit != null) {
                 hitPos = entityHit.getLocation();
                 Entity target = entityHit.getEntity();
                 target.hurt(level.damageSources().magic(), 10.0F);
                 ((ServerLevel) level).sendParticles(ParticleTypes.ENCHANT,
                         target.getX(), target.getY() + 1, target.getZ(), 20, 0.5, 0.5, 0.5, 0.01);
-            } else if (blockHit.getType() == Type.BLOCK) {
-                hitPos = Vec3.atCenterOf(blockHit.getBlockPos());
-                BlockPos pos = blockHit.getBlockPos().relative(blockHit.getDirection());
-                level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
-            }
-            if (hitPos != null) {
                 spawnBeamParticles(level, start, hitPos);
+            } else if (blockHit.getType() == Type.BLOCK) {
+                hitPos = Vec3.atLowerCornerOf(blockHit.getBlockPos());
+                spawnBeamParticles(level, start, hitPos);
+            } else {
+                spawnBeamParticles(level, start, end);
             }
             level.playSound(null, player.blockPosition(),
                     SoundEvents.EVOKER_CAST_SPELL, SoundSource.PLAYERS, 1.0F, 1.0F);
@@ -79,12 +76,11 @@ public class MagicWand extends Item {
         Vec3 delta = end.subtract(start);
         double length = delta.length();
         Vec3 direction = delta.normalize();
-        int steps = (int)(length / stepSize);
+        int steps = (int) Math.ceil(length / stepSize);
         for (int i = 0; i <= steps; i++) {
             Vec3 pos = start.add(direction.scale(i * stepSize));
             if (level instanceof ServerLevel serverLevel) {
-                serverLevel.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y, pos.z,
-                        1, 0, 0, 0, 0);
+                serverLevel.sendParticles(ParticleTypes.END_ROD, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0.01);
             }
         }
     }
