@@ -2,7 +2,6 @@ package com.kisaraginoah.atamanikita.entity.projectile;
 
 import com.kisaraginoah.atamanikita.init.ModEntities;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -130,11 +129,5 @@ public class MagicalProjectile extends Projectile {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
-    }
-
-    @Override
-    public void recreateFromPacket(ClientboundAddEntityPacket packet) {
-        this.setDeltaMovement(this.getDeltaMovement().x, this.getDeltaMovement().y, this.getDeltaMovement().z);
-        super.recreateFromPacket(packet);
     }
 }
