@@ -40,6 +40,7 @@ public class ModCreativeTabs {
                             output.accept(ModItems.MAGIC_WAND.value());
                             output.accept(ModItems.MAGICAL_WAND.value());
                             output.accept(ModItems.PARTICLE_SWORD.value());
+                            output.accept(ModItems.LOVE_ITEM.value());
                         }).withSearchBar().build()
         );
     }

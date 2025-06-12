@@ -11,6 +11,7 @@ import com.kisaraginoah.atamanikita.item.magic.WarpStone;
 import com.kisaraginoah.atamanikita.item.musicdisc.AsuretikkuMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.MegalovaniaMusicDisc;
 import com.kisaraginoah.atamanikita.item.musicdisc.OhanabatakeMusicDisc;
+import com.kisaraginoah.atamanikita.item.other.LoveItem;
 import com.kisaraginoah.atamanikita.item.other.PoopItem;
 import com.kisaraginoah.atamanikita.item.tool.LevelUpPickaxe;
 import com.kisaraginoah.atamanikita.item.tool.RemoteActivator;
@@ -45,4 +46,5 @@ public class ModItems {
     public static final Holder<Item> MAGICAL_WAND = REGISTER.register("magical_wand", MagicalWand::new);
 
     public static final Holder<Item> PARTICLE_SWORD = REGISTER.register("particle_sword", ParticleSword::new);
+    public static final Holder<Item> LOVE_ITEM = REGISTER.register("love_item", LoveItem::new);
 }
